@@ -49,7 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             //由于itemView是item的布局文件，我们需要的是里面的textView，因此利用itemView.findViewById获
             //取里面的textView实例，后面通过onBindViewHolder方法能直接填充数据到每一个textView了
-            mTextView = itemView.findViewById(R.id.itemText);
+            mTextView = itemView.findViewById(R.id.truck_name);
         }
     }
 }
