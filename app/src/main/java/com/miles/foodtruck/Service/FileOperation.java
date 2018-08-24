@@ -1,4 +1,4 @@
-package com.miles.foodtruck;
+package com.miles.foodtruck.Service;
 
 import java.io.InputStream;
 

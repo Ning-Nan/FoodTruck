@@ -1,7 +1,6 @@
-package com.miles.foodtruck.Abstract;
-import com.miles.foodtruck.Interface.Trackable;
+package com.miles.foodtruck.Model;
 
-public abstract class AbstractTrackable implements Trackable{
+public abstract class AbstractTrackable{
 
     private int id;
     private String name;
