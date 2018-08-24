@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class FileReader {
 
-private static ArrayList<FoodTruck> foodTrucks;
+private static ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
 
     public static ArrayList<FoodTruck> getTrackableList(InputStream input) throws IOException {
 
@@ -27,10 +27,10 @@ private static ArrayList<FoodTruck> foodTrucks;
 
                 String[] splitLine = line.split(",\"");
 
-                //Delete remaining ","
+                //Delete remaining "
                 for (int i = 0; i < splitLine.length; i++)
                 {
-                    splitLine[i].replace(",","");
+                    splitLine[i] = splitLine[i].replace("\"","");
                 }
 
                 int id = Integer.parseInt(splitLine[0]);

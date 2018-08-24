@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">FoodTruck</string>
-    <string name="truck_file_name">food_truck_data</string>
+    <string name="truck_file_name">food_truck_data.txt</string>
 
 </resources>

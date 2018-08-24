@@ -13,31 +13,31 @@ import com.miles.foodtruck.Service.FileReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> mData;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        initData();
-        initRecyclerView();
-        ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
 
         try {
-            foodTrucks = FileReader.getTrackableList(getAssets().open(String.valueOf(R.string.truck_file_name)));
+            foodTrucks = FileReader.getTrackableList(getAssets().open(getString(R.string.truck_file_name)));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Log.w("Test", foodTrucks.toString());
+        initRecyclerView();
+
+
 
     }
 
@@ -54,15 +54,9 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new RecyclerAdapter(mData);
+        mAdapter = new RecyclerAdapter(foodTrucks);
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
-    private void initData(){
-        mData = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            mData.add("Item "+i);
-        }
-    }
 }
