@@ -4,10 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
+import com.miles.foodtruck.Model.FoodTruck;
 import com.miles.foodtruck.R;
+import com.miles.foodtruck.Service.FileReader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initData();
         initRecyclerView();
+        ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
+
+        try {
+            foodTrucks = FileReader.getTrackableList(getAssets().open(String.valueOf(R.string.truck_file_name)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.w("Test", foodTrucks.toString());
 
     }
 
