@@ -1,7 +1,5 @@
 package com.miles.foodtruck.Service;
 
-import android.content.Intent;
-
 import com.miles.foodtruck.Model.FoodTruck;
 
 import java.io.BufferedReader;

@@ -1,6 +1,6 @@
 package com.miles.foodtruck.Model;
 
-public abstract class AbstractTrackable{
+public abstract class Trackable {
 
     private int id;
     private String name;
@@ -10,7 +10,7 @@ public abstract class AbstractTrackable{
 
 
 
-    public AbstractTrackable(int id, String name, String description, String url, String category)
+    public Trackable(int id, String name, String description, String url, String category)
     {
 
         this.id = id;
