@@ -9,13 +9,12 @@ import android.widget.Spinner;
 
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
+import com.miles.foodtruck.Controller.SpinnerListener;
 import com.miles.foodtruck.Model.FoodTruck;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.Service.FileReader;
+import com.miles.foodtruck.Service.TrucksService;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initTrackable();
         initRecyclerView();
-        initSnipper();
+        initSpinner();
 
 
 
@@ -46,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        //mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
+        // specify an adapter
         mAdapter = new RecyclerAdapter(foodTrucks);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -61,23 +60,25 @@ public class MainActivity extends AppCompatActivity {
     private void initTrackable(){
 
         try {
-            foodTrucks = FileReader.getTrackableList(getAssets().open(getString(R.string.truck_file_name)));
+            foodTrucks = TrucksService.readTrackableList(getAssets().open(getString(R.string.truck_file_name)));
         } catch (IOException e) {
             e.printStackTrace();
 
         }
     }
 
-    private void initSnipper(){
+    private void initSpinner(){
 
 
         Spinner spinner = findViewById(R.id.truck_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, FileReader.getCategories());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrucksService.getCategories());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new SpinnerListener(foodTrucks,mRecyclerView));
     }
 
 }

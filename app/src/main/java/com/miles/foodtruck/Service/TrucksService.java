@@ -9,12 +9,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class FileReader {
+public class TrucksService {
 
 private static ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
 private static ArrayList<String> categories = new ArrayList<>();
 
-    public static ArrayList<FoodTruck> getTrackableList(InputStream input) throws IOException {
+    public static ArrayList<FoodTruck> readTrackableList(InputStream input) throws IOException {
 
         if (foodTrucks.size() == 0)
         {
@@ -63,6 +63,9 @@ private static ArrayList<String> categories = new ArrayList<>();
             categories.clear();
             categories.addAll(h);
 
+            //add heading
+            categories.add(0,"All Categories");
+
             return categories;
         }
 
@@ -70,5 +73,26 @@ private static ArrayList<String> categories = new ArrayList<>();
             return categories;
         }
     }
+
+    public static ArrayList<FoodTruck> getTrucksInCategory(String category){
+
+        ArrayList<FoodTruck> foodTrucksInCategory = new ArrayList<>();
+        for (int i = 0; i < foodTrucks.size(); i++) {
+
+            if (foodTrucks.get(i).getCategory().equals(category))
+            {
+                foodTrucksInCategory.add(foodTrucks.get(i));
+            }
+
+        }
+
+        return foodTrucksInCategory;
+    }
+
+    public static ArrayList<FoodTruck> getTrackableList() {
+        return foodTrucks;
+    }
+
+
 
 }
