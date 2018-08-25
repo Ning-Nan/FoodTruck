@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
     private ArrayList<FoodTruck> foodTrucks;
-    private RecyclerView mRecyclerView;
+    private RecyclerAdapter mAdapter;
 
-    public SpinnerListener(ArrayList<FoodTruck> foodTrucks, RecyclerView mRecyclerView) {
+    public SpinnerListener(ArrayList<FoodTruck> foodTrucks,RecyclerAdapter mAdapter) {
 
         this.foodTrucks = foodTrucks;
-        this.mRecyclerView = mRecyclerView;
+        this.mAdapter = mAdapter;
     }
 
     @Override
@@ -34,12 +34,10 @@ public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
         }
 
-        /*
-        Here I am not using notify dataset changed because I found for operation replacing the whole list, will not
-        be updated by adapter.
-        So I set new Adapter for it.
-         */
-        mRecyclerView.setAdapter(new RecyclerAdapter(foodTrucks));
+
+        mAdapter.update(foodTrucks);
+        mAdapter.notifyDataSetChanged();
+
     }
 
     @Override

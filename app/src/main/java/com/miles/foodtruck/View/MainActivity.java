@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(new SpinnerListener(foodTrucks,mRecyclerView));
+        spinner.setOnItemSelectedListener(new SpinnerListener(foodTrucks,mAdapter));
     }
 
 }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.miles.foodtruck.Model.FoodTruck;
 import com.miles.foodtruck.R;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
@@ -53,6 +55,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         viewHolder.mTextView.setText(mDataSet.get(i).getName());
         viewHolder.mImageView.setImageResource(R.drawable.food_truck_logo);
         viewHolder.mImageView.setContentDescription(mDataSet.get(i).getName());
+    }
+
+    public void update(ArrayList<FoodTruck> foodTrucks){
+        this.mDataSet = foodTrucks;
     }
 
 }
