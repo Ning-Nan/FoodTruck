@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
@@ -11,7 +13,9 @@ import com.miles.foodtruck.Model.FoodTruck;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Service.FileReader;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,14 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        try {
-            foodTrucks = FileReader.getTrackableList(getAssets().open(getString(R.string.truck_file_name)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        initTrackable();
         initRecyclerView();
+        initSnipper();
 
 
 
@@ -57,6 +56,28 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new RecyclerAdapter(foodTrucks);
         mRecyclerView.setAdapter(mAdapter);
 
+    }
+
+    private void initTrackable(){
+
+        try {
+            foodTrucks = FileReader.getTrackableList(getAssets().open(getString(R.string.truck_file_name)));
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private void initSnipper(){
+
+
+        Spinner spinner = findViewById(R.id.truck_spinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, FileReader.getCategories());
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
     }
 
 }

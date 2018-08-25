@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class FileReader {
 
 private static ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
+private static ArrayList<String> categories = new ArrayList<>();
 
     public static ArrayList<FoodTruck> getTrackableList(InputStream input) throws IOException {
 
@@ -45,6 +47,28 @@ private static ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
             return  foodTrucks;
         }
 
+    }
+
+    public static ArrayList<String> getCategories(){
+
+        if (categories.size() == 0)
+        {
+            for (int i = 0; i < foodTrucks.size(); i++)
+            {
+                categories.add(foodTrucks.get(i).getCategory());
+            }
+
+            //remove all repeat strings.
+            HashSet h = new HashSet(categories);
+            categories.clear();
+            categories.addAll(h);
+
+            return categories;
+        }
+
+        else{
+            return categories;
+        }
     }
 
 }
