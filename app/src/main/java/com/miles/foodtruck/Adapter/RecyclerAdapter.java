@@ -5,10 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.miles.foodtruck.Model.FoodTruck;
+import com.miles.foodtruck.Model.Abstract.Trackable;
 import com.miles.foodtruck.R;
 
 import java.util.ArrayList;
@@ -17,10 +16,10 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
 
-    private List<FoodTruck> mDataSet;
+    private List<Trackable> mDataSet;
 
     //Constructor, accept data set
-    public RecyclerAdapter(List<FoodTruck> trucks){
+    public RecyclerAdapter(List<Trackable> trucks){
         mDataSet = trucks;
     }
 
@@ -41,23 +40,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     static  class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView mTextView;
-        private ImageView mImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.truck_name);
-            mImageView = itemView.findViewById(R.id.truck_logo);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.mTextView.setText(mDataSet.get(i).getName());
-        viewHolder.mImageView.setImageResource(R.drawable.food_truck_logo);
-        viewHolder.mImageView.setContentDescription(mDataSet.get(i).getName());
+
+        viewHolder.mTextView.setText(mDataSet.get(i).toString());
+
     }
 
-    public void update(ArrayList<FoodTruck> foodTrucks){
+    public void update(ArrayList<Trackable> foodTrucks){
         this.mDataSet = foodTrucks;
     }
 

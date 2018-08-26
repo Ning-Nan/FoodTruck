@@ -1,6 +1,8 @@
 package com.miles.foodtruck.Model;
 
 
+import com.miles.foodtruck.Model.Abstract.Trackable;
+
 public class FoodTruck extends Trackable {
 
 

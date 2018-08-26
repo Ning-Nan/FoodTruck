@@ -1,6 +1,7 @@
-package com.miles.foodtruck.Service;
+package com.miles.foodtruck.Model;
 
-import com.miles.foodtruck.Model.FoodTruck;
+
+import com.miles.foodtruck.Model.Abstract.Trackable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,12 +10,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class TrucksService {
+public class TrakacbleManager {
 
-private static ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
+private static ArrayList<Trackable> foodTrucks = new ArrayList<>();
 private static ArrayList<String> categories = new ArrayList<>();
 
-    public static ArrayList<FoodTruck> readTrackableList(InputStream input) throws IOException {
+    public static ArrayList<Trackable> readTrackableList(InputStream input) throws IOException {
 
         if (foodTrucks.size() == 0)
         {
@@ -34,7 +35,7 @@ private static ArrayList<String> categories = new ArrayList<>();
                 }
 
                 int id = Integer.parseInt(splitLine[0]);
-                FoodTruck truck = new FoodTruck(id, splitLine[1],
+                Trackable truck = new FoodTruck(id, splitLine[1],
                         splitLine[2],splitLine[3],splitLine[4]);
 
                 foodTrucks.add(truck);
@@ -74,9 +75,9 @@ private static ArrayList<String> categories = new ArrayList<>();
         }
     }
 
-    public static ArrayList<FoodTruck> getTrucksInCategory(String category){
+    public static ArrayList<Trackable> getTrucksInCategory(String category){
 
-        ArrayList<FoodTruck> foodTrucksInCategory = new ArrayList<>();
+        ArrayList<Trackable> foodTrucksInCategory = new ArrayList<>();
         for (int i = 0; i < foodTrucks.size(); i++) {
 
             if (foodTrucks.get(i).getCategory().equals(category))
@@ -89,7 +90,7 @@ private static ArrayList<String> categories = new ArrayList<>();
         return foodTrucksInCategory;
     }
 
-    public static ArrayList<FoodTruck> getTrackableList() {
+    public static ArrayList<Trackable> getTrackableList() {
         return foodTrucks;
     }
 

@@ -1,20 +1,20 @@
 package com.miles.foodtruck.Controller;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
+import com.miles.foodtruck.Model.Abstract.Trackable;
 import com.miles.foodtruck.Model.FoodTruck;
-import com.miles.foodtruck.Service.TrucksService;
+import com.miles.foodtruck.Model.TrakacbleManager;
 
 import java.util.ArrayList;
 
 public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
-    private ArrayList<FoodTruck> foodTrucks;
+    private ArrayList<Trackable> foodTrucks;
     private RecyclerAdapter mAdapter;
 
-    public SpinnerListener(ArrayList<FoodTruck> foodTrucks,RecyclerAdapter mAdapter) {
+    public SpinnerListener(ArrayList<Trackable> foodTrucks,RecyclerAdapter mAdapter) {
 
         this.foodTrucks = foodTrucks;
         this.mAdapter = mAdapter;
@@ -26,11 +26,11 @@ public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
         if (position == 0)
         {
-            foodTrucks = TrucksService.getTrackableList();
+            foodTrucks = TrakacbleManager.getTrackableList();
         }
         else{
 
-            foodTrucks = TrucksService.getTrucksInCategory((String) parent.getItemAtPosition(position));
+            foodTrucks = TrakacbleManager.getTrucksInCategory((String) parent.getItemAtPosition(position));
 
         }
 

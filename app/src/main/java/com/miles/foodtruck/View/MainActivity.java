@@ -10,9 +10,9 @@ import android.widget.Spinner;
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
 import com.miles.foodtruck.Controller.SpinnerListener;
-import com.miles.foodtruck.Model.FoodTruck;
+import com.miles.foodtruck.Model.Abstract.Trackable;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.Service.TrucksService;
+import com.miles.foodtruck.Model.TrakacbleManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
+    private ArrayList<Trackable> foodTrucks = new ArrayList<>();
 
 
     @Override
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private void initTrackable(){
 
         try {
-            foodTrucks = TrucksService.readTrackableList(getAssets().open(getString(R.string.truck_file_name)));
+            foodTrucks = TrakacbleManager.readTrackableList(getAssets().open(getString(R.string.truck_file_name)));
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.truck_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrucksService.getCategories());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrakacbleManager.getCategories());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

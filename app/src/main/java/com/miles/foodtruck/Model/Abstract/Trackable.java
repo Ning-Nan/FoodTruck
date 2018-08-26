@@ -1,6 +1,8 @@
-package com.miles.foodtruck.Model;
+package com.miles.foodtruck.Model.Abstract;
 
-public abstract class Trackable {
+import com.miles.foodtruck.Model.Interface.TrackableInterface;
+
+public abstract class Trackable implements TrackableInterface{
 
     private int id;
     private String name;
@@ -20,21 +22,32 @@ public abstract class Trackable {
         this.category = category;
     }
 
-
-    public int getId() {
-        return id;
-    }
+    @Override
+    public int getId() { return id; }
+    @Override
     public String getName() {
         return name;
     }
+    @Override
     public String getDescription() {
         return description;
     }
+    @Override
     public String getUrl() {
         return url;
     }
+    @Override
     public String getCategory() {
         return category;
     }
 
+    @Override
+    public String toString() {
+        String str = "Name: " + getName() + "\n"
+                + "Description: " + getDescription() + "\n"
+                + "Url: " + getUrl() + "\n"
+                + "Category: " + getCategory();
+
+        return str;
+    }
 }
