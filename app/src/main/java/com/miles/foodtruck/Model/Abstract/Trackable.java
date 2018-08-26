@@ -43,11 +43,10 @@ public abstract class Trackable implements TrackableInterface{
 
     @Override
     public String toString() {
-        String str = "Name: " + getName() + "\n"
+
+        return "Name: " + getName() + "\n"
                 + "Description: " + getDescription() + "\n"
                 + "Url: " + getUrl() + "\n"
                 + "Category: " + getCategory();
-
-        return str;
     }
 }

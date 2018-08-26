@@ -4,8 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
@@ -81,4 +84,10 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new SpinnerListener(foodTrucks,mAdapter));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.show_trackings, menu);
+        return true;
+    }
 }
