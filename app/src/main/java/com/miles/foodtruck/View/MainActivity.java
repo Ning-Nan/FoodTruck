@@ -60,11 +60,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
     }
-
     private void initTrackable(){
 
         try {
-            foodTrucks = TrakacbleManager.readTrackableList(getAssets().open(getString(R.string.truck_file_name)));
+            foodTrucks = TrakacbleManager.readTrackableList(getResources().openRawResource(R.raw.food_truck_data));
         } catch (IOException e) {
             e.printStackTrace();
 
