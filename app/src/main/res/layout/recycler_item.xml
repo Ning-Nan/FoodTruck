@@ -15,22 +15,19 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/truck_name"
+            android:id="@+id/list_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:textSize="@dimen/text_size"
-            android:layout_weight= "1"
-
-            />
+            android:layout_weight= "1" />
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/list_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="4"
-            android:text = "@string/add_button"
             android:layout_marginRight="@dimen/margin"
             />
 

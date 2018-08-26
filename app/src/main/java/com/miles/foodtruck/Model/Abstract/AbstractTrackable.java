@@ -2,7 +2,7 @@ package com.miles.foodtruck.Model.Abstract;
 
 import com.miles.foodtruck.Model.Interface.TrackableInterface;
 
-public abstract class Trackable implements TrackableInterface{
+public abstract class AbstractTrackable implements TrackableInterface{
 
     private int id;
     private String name;
@@ -12,7 +12,7 @@ public abstract class Trackable implements TrackableInterface{
 
 
 
-    public Trackable(int id, String name, String description, String url, String category)
+    public AbstractTrackable(int id, String name, String description, String url, String category)
     {
 
         this.id = id;
@@ -22,27 +22,22 @@ public abstract class Trackable implements TrackableInterface{
         this.category = category;
     }
 
-    @Override
     public int getId() { return id; }
-    @Override
     public String getName() {
         return name;
     }
-    @Override
     public String getDescription() {
         return description;
     }
-    @Override
     public String getUrl() {
         return url;
     }
-    @Override
     public String getCategory() {
         return category;
     }
 
     @Override
-    public String toString() {
+    public String getOutPutString() {
 
         return "Name: " + getName() + "\n"
                 + "Description: " + getDescription() + "\n"

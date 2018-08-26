@@ -1,7 +1,7 @@
 package com.miles.foodtruck.Model;
 
 
-import com.miles.foodtruck.Model.Abstract.Trackable;
+import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,10 +12,10 @@ import java.util.HashSet;
 
 public class TrakacbleManager {
 
-private static ArrayList<Trackable> foodTrucks = new ArrayList<>();
+private static ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
 private static ArrayList<String> categories = new ArrayList<>();
 
-    public static ArrayList<Trackable> readTrackableList(InputStream input) throws IOException {
+    public static ArrayList<AbstractTrackable> readTrackableList(InputStream input) throws IOException {
 
         if (foodTrucks.size() == 0)
         {
@@ -35,7 +35,7 @@ private static ArrayList<String> categories = new ArrayList<>();
                 }
 
                 int id = Integer.parseInt(splitLine[0]);
-                Trackable truck = new FoodTruck(id, splitLine[1],
+                AbstractTrackable truck = new FoodTruck(id, splitLine[1],
                         splitLine[2],splitLine[3],splitLine[4]);
 
                 foodTrucks.add(truck);
@@ -75,9 +75,9 @@ private static ArrayList<String> categories = new ArrayList<>();
         }
     }
 
-    public static ArrayList<Trackable> getTrucksInCategory(String category){
+    public static ArrayList<AbstractTrackable> getTrucksInCategory(String category){
 
-        ArrayList<Trackable> foodTrucksInCategory = new ArrayList<>();
+        ArrayList<AbstractTrackable> foodTrucksInCategory = new ArrayList<>();
         for (int i = 0; i < foodTrucks.size(); i++) {
 
             if (foodTrucks.get(i).getCategory().equals(category))
@@ -90,7 +90,7 @@ private static ArrayList<String> categories = new ArrayList<>();
         return foodTrucksInCategory;
     }
 
-    public static ArrayList<Trackable> getTrackableList() {
+    public static ArrayList<AbstractTrackable> getTrackableList() {
         return foodTrucks;
     }
 

@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.miles.foodtruck.Model.Abstract.Trackable;
+import com.miles.foodtruck.Controller.AddTrackingBtnListener;
+import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
 
 import java.util.ArrayList;
@@ -16,10 +18,10 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
 
-    private List<Trackable> mDataSet;
+    private List<AbstractTrackable> mDataSet;
 
     //Constructor, accept data set
-    public RecyclerAdapter(List<Trackable> trucks){
+    public RecyclerAdapter(List<AbstractTrackable> trucks){
         mDataSet = trucks;
     }
 
@@ -40,21 +42,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     static  class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView mTextView;
+        private Button mButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextView = itemView.findViewById(R.id.truck_name);
+            mTextView = itemView.findViewById(R.id.list_text);
+            mButton = itemView.findViewById(R.id.list_button);
+
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.mTextView.setText(mDataSet.get(i).toString());
-
+        viewHolder.mTextView.setText(mDataSet.get(i).getOutPutString());
+        viewHolder.mButton.setText(R.string.add_button);
+        viewHolder.mButton.setOnClickListener(new AddTrackingBtnListener(mDataSet.get(i), null));
     }
 
-    public void update(ArrayList<Trackable> foodTrucks){
+    public void update(ArrayList<AbstractTrackable> foodTrucks){
         this.mDataSet = foodTrucks;
     }
 

@@ -14,7 +14,7 @@ import android.widget.Spinner;
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
 import com.miles.foodtruck.Controller.SpinnerListener;
-import com.miles.foodtruck.Model.Abstract.Trackable;
+import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Model.TrakacbleManager;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Trackable> foodTrucks = new ArrayList<>();
+    private ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
 
 
     @Override

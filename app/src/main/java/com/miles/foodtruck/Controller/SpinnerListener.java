@@ -3,18 +3,17 @@ package com.miles.foodtruck.Controller;
 import android.view.View;
 import android.widget.AdapterView;
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
-import com.miles.foodtruck.Model.Abstract.Trackable;
-import com.miles.foodtruck.Model.FoodTruck;
+import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.Model.TrakacbleManager;
 
 import java.util.ArrayList;
 
 public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
-    private ArrayList<Trackable> foodTrucks;
+    private ArrayList<AbstractTrackable> foodTrucks;
     private RecyclerAdapter mAdapter;
 
-    public SpinnerListener(ArrayList<Trackable> foodTrucks,RecyclerAdapter mAdapter) {
+    public SpinnerListener(ArrayList<AbstractTrackable> foodTrucks, RecyclerAdapter mAdapter) {
 
         this.foodTrucks = foodTrucks;
         this.mAdapter = mAdapter;

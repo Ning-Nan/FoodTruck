@@ -3,7 +3,7 @@
     <string name="truck_file_name">food_truck_data.txt</string>
     <string name="logo_description">Food truck name</string>
     <string name="show_tracking_menu_item">Show Trackings</string>
-    <string name="add_button"> + </string>
+    <string name="add_button">Add</string>
 
 
 </resources>
