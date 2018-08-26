@@ -1,5 +1,6 @@
 package com.miles.foodtruck.Adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.miles.foodtruck.Controller.AddTrackingBtnListener;
+import com.miles.foodtruck.Controller.ModifyTrackingListener;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
 
@@ -19,10 +20,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
     private List<AbstractTrackable> mDataSet;
+    private Context mContext;
 
     //Constructor, accept data set
-    public RecyclerAdapter(List<AbstractTrackable> trucks){
+    public RecyclerAdapter(List<AbstractTrackable> trucks, Context context){
         mDataSet = trucks;
+        mContext = context;
     }
 
     @NonNull
@@ -57,7 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         viewHolder.mTextView.setText(mDataSet.get(i).getOutPutString());
         viewHolder.mButton.setText(R.string.add_button);
-        viewHolder.mButton.setOnClickListener(new AddTrackingBtnListener(mDataSet.get(i), null));
+        viewHolder.mButton.setOnClickListener(new ModifyTrackingListener(mDataSet.get(i), null, mContext));
     }
 
     public void update(ArrayList<AbstractTrackable> foodTrucks){

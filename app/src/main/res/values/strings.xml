@@ -3,6 +3,8 @@
     <string name="logo_description">Food truck name</string>
     <string name="show_tracking_menu_item">Show Trackings</string>
     <string name="add_button">Add</string>
+    <string name="modify_tracking_title">Modify Tracking</string>
+    <string name="trackable_list_title">Trackable List</string>
 
 
 </resources>

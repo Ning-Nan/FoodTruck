@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.TrackingActivity"></activity>
+        <activity android:name=".View.TrackingActivity" />
+        <activity android:name=".View.ModifyTrackingActivity"></activity>
     </application>
 
 </manifest>

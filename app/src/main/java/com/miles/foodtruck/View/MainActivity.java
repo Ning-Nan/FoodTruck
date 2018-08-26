@@ -17,6 +17,7 @@ import com.miles.foodtruck.Controller.SpinnerListener;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Model.TrakacbleManager;
+import com.miles.foodtruck.Service.TestTrackingService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        setTitle(R.string.trackable_list_title);
         initTrackable();
         initRecyclerView();
         initSpinner();
+        TestTrackingService.test(this);
 
 
 
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        mAdapter = new RecyclerAdapter(foodTrucks);
+        mAdapter = new RecyclerAdapter(foodTrucks, this);
         mRecyclerView.setAdapter(mAdapter);
 
     }
