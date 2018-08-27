@@ -3,17 +3,22 @@ package com.miles.foodtruck.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
+
 
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
+import com.miles.foodtruck.Util.Constant;
 import com.miles.foodtruck.View.ModifyTrackingActivity;
+
+
 
 public class ModifyTrackingListener implements View.OnClickListener {
 
     private AbstractTrackable foodTruck;
     private AbstractTracking tracking;
     private Context context;
+
+
 
     public ModifyTrackingListener(AbstractTrackable foodTruck, AbstractTracking tracking, Context context){
         this.foodTruck = foodTruck;
@@ -34,11 +39,12 @@ public class ModifyTrackingListener implements View.OnClickListener {
         //case add new tracking
         else
         {
-            intent.putExtra("Operation", "Add");
-            intent.putExtra("TrackableId",Integer.toString(foodTruck.getId()));
+            intent.putExtra(Constant.operation, Constant.AddOperation);
+            intent.putExtra(Constant.trackableId,Integer.toString(foodTruck.getId()));
+            intent.putExtra(Constant.trackableName,foodTruck.getName());
+
 
             context.startActivity(intent);
-           //Toast.makeText(context,"test",Toast.LENGTH_SHORT).show();
         }
 
     }

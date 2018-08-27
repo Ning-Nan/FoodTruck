@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.miles.foodtruck.R;
 
-public class TrackingActivity extends AppCompatActivity {
+public class TrackingListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

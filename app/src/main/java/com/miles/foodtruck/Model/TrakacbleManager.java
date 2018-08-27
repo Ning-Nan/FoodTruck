@@ -93,6 +93,19 @@ private static ArrayList<String> categories = new ArrayList<>();
     public static ArrayList<AbstractTrackable> getTrackableList() {
         return foodTrucks;
     }
+    
+    public static AbstractTrackable getTrackable(int id){
+
+        for (int i = 0; i < foodTrucks.size(); i++) {
+            if (foodTrucks.get(i).getId() == id)
+            {
+                return foodTrucks.get(i);
+            }
+        }
+
+        return null;
+
+    }
 
 
 

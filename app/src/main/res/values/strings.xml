@@ -5,6 +5,15 @@
     <string name="add_button">Add</string>
     <string name="modify_tracking_title">Modify Tracking</string>
     <string name="trackable_list_title">Trackable List</string>
+    <string name="tracking_name_label">Tracking Name:</string>
+    <string name="date_picker_label">Date:</string>
+    <string name="time_picker_label">Time:</string>
+    <string name="save_tracking_button">Save</string>
+
+
+
+
+
 
 
 </resources>

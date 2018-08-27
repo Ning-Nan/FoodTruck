@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.show_trackings:
-                Intent intent = new Intent(this, TrackingActivity.class);
+                Intent intent = new Intent(this, TrackingListActivity.class);
                 startActivity(intent);
                 return true;
 
