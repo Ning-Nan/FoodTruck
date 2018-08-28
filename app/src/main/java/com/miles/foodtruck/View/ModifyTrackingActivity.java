@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miles.foodtruck.Controller.PickerOnClickListener;
+import com.miles.foodtruck.Controller.SaveBtnOnClickListener;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Util.Constant;
 
@@ -37,7 +38,9 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         TextView trackableTitle = findViewById(R.id.trackable_name);
         EditText datePicker = findViewById(R.id.date_picker);
         EditText timePicker = findViewById(R.id.time_picker);
+        EditText trackingTitle = findViewById(R.id.input_tracking_name);
         Button saveBtn = findViewById(R.id.save_button);
+
 
         switch (operation){
             case Constant.AddOperation:
@@ -51,6 +54,8 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         datePicker.setOnClickListener(new PickerOnClickListener(datePicker, getSupportFragmentManager()));
         timePicker.setOnClickListener(new PickerOnClickListener(timePicker, getSupportFragmentManager()));
+        saveBtn.setOnClickListener(new SaveBtnOnClickListener(intent.getExtras(),trackingTitle,
+                datePicker,timePicker));
 
 
     }

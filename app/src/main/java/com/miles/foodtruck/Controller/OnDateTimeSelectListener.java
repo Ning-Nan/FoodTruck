@@ -81,7 +81,7 @@ public class OnDateTimeSelectListener implements DatePickerDialog.OnDateSetListe
             minutes = Integer.toString(minute);
         }
 
-        editText.setText(Integer.toString(hour) + ":" + minutes + " " + period);
+        editText.setText(Integer.toString(hour) + ":" + minutes + ":00 " + period);
 
 
     }
