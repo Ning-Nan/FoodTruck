@@ -7,9 +7,11 @@ import android.view.View;
 
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
+import com.miles.foodtruck.Model.TrackacbleManager;
 import com.miles.foodtruck.Util.Constant;
 import com.miles.foodtruck.View.ModifyTrackingActivity;
 
+import java.text.SimpleDateFormat;
 
 
 public class ModifyTrackingListener implements View.OnClickListener {
@@ -34,18 +36,30 @@ public class ModifyTrackingListener implements View.OnClickListener {
         //case edit tracking
         if (foodTruck == null){
 
+            intent.putExtra(Constant.operation, Constant.EditOperation);
+            intent.putExtra(Constant.trackableId, tracking.getTrackableId());
+            intent.putExtra(Constant.trackableName, TrackacbleManager.getTrackable(tracking.getTrackableId()).getName());
+            intent.putExtra(Constant.trackingTitle, tracking.getTitle());
+            intent.putExtra(Constant.trackingId, tracking.getTrackingId());
+
+
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            intent.putExtra(Constant.dateText,dateFormat.format(tracking.getMeetTime()));
+            dateFormat = new SimpleDateFormat("h:mm:ss aa");
+            intent.putExtra(Constant.timeText,dateFormat.format(tracking.getMeetTime()));
+
         }
 
         //case add new tracking
         else
         {
             intent.putExtra(Constant.operation, Constant.AddOperation);
-            intent.putExtra(Constant.trackableId,Integer.toString(foodTruck.getId()));
+            intent.putExtra(Constant.trackableId,foodTruck.getId());
             intent.putExtra(Constant.trackableName,foodTruck.getName());
-
-
-            context.startActivity(intent);
         }
+        context.startActivity(intent);
+
 
     }
 }

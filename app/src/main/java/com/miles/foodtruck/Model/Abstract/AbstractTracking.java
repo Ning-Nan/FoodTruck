@@ -80,4 +80,12 @@ public abstract class AbstractTracking implements TrackingInterface{
     public void setMeetLocation(String meetLocation) {
         this.meetLocation = meetLocation;
     }
+
+    @Override
+    public String getOutPutString() {
+
+        return "Title: " + getTitle() + "\n"
+                + "Meet Time " + getMeetTime() + "\n"
+                + "Meet Location " + getMeetLocation();
+    }
 }

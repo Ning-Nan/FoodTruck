@@ -16,8 +16,7 @@ import com.miles.foodtruck.Adapter.RecyclerAdapter;
 import com.miles.foodtruck.Controller.SpinnerListener;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.Model.TrakacbleManager;
-import com.miles.foodtruck.Service.TestTrackingService;
+import com.miles.foodtruck.Model.TrackacbleManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         initTrackable();
         initRecyclerView();
         initSpinner();
-        TestTrackingService.test(this);
 
 
 
@@ -50,23 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        //mRecyclerView.setHasFixedSize(true);
+
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        mAdapter = new RecyclerAdapter(foodTrucks, this);
+        mAdapter = new RecyclerAdapter(foodTrucks,null, this);
         mRecyclerView.setAdapter(mAdapter);
 
     }
     private void initTrackable(){
 
         try {
-            foodTrucks = TrakacbleManager.readTrackableList(getResources().openRawResource(R.raw.food_truck_data));
+            foodTrucks = TrackacbleManager.readTrackableList(getResources().openRawResource(R.raw.food_truck_data));
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.truck_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrakacbleManager.getCategories());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrackacbleManager.getCategories());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

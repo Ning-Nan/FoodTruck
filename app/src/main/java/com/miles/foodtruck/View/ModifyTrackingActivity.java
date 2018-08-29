@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,9 @@ import com.miles.foodtruck.Controller.PickerOnClickListener;
 import com.miles.foodtruck.Controller.SaveBtnOnClickListener;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Util.Constant;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ModifyTrackingActivity extends AppCompatActivity {
 
@@ -41,21 +45,19 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         EditText trackingTitle = findViewById(R.id.input_tracking_name);
         Button saveBtn = findViewById(R.id.save_button);
 
+        trackableTitle.setText(intent.getStringExtra(Constant.trackableName));
 
-        switch (operation){
-            case Constant.AddOperation:
-                trackableTitle.setText(intent.getStringExtra(Constant.trackableName));
-                break;
-            case Constant.EditOperation:
-                break;
-            default:
-                break;
+        if (operation.equals(Constant.EditOperation))
+        {
+            trackingTitle.setText(intent.getStringExtra(Constant.trackingTitle));
+            datePicker.setText(intent.getStringExtra(Constant.dateText));
+            timePicker.setText(intent.getStringExtra(Constant.timeText));
+
         }
-
         datePicker.setOnClickListener(new PickerOnClickListener(datePicker, getSupportFragmentManager()));
         timePicker.setOnClickListener(new PickerOnClickListener(timePicker, getSupportFragmentManager()));
         saveBtn.setOnClickListener(new SaveBtnOnClickListener(intent.getExtras(),trackingTitle,
-                datePicker,timePicker));
+                datePicker,timePicker,this));
 
 
     }

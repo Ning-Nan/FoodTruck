@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class TrakacbleManager {
+public class TrackacbleManager {
 
 private static ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
 private static ArrayList<String> categories = new ArrayList<>();

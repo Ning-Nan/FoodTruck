@@ -42,7 +42,7 @@ public class OnDateTimeSelectListener implements DatePickerDialog.OnDateSetListe
         }
 
 
-        String dateStr = day + "/" + months + "/" + Integer.toString(year);
+        String dateStr = months + "/" + day + "/" + Integer.toString(year);
 
         editText.setText(dateStr);
     }
@@ -53,8 +53,6 @@ public class OnDateTimeSelectListener implements DatePickerDialog.OnDateSetListe
         int hour;
         String minutes;
         String period;
-
-        Log.w(Integer.toString(hourOfDay), Integer.toString(minute));
 
 
         if (hourOfDay - 12 >= 0)

@@ -32,7 +32,6 @@ public class DateTimePickerFragment extends DialogFragment {
 
         }
 
-
     }
 
 
@@ -44,10 +43,10 @@ public class DateTimePickerFragment extends DialogFragment {
         {
 
             int[] dates = Helpers.extractDateTime(Constant.DatePicker,getArguments().getString(Constant.PickerText));
-            day = dates[0];
+            day = dates[1];
 
             //Month index from 0
-            month = dates[1] - 1;
+            month = dates[0] - 1;
 
             year = dates[2];
         }
