@@ -34,7 +34,7 @@ public class SpinnerListener implements AdapterView.OnItemSelectedListener {
         }
 
 
-        mAdapter.update(foodTrucks);
+        mAdapter.updateTrackables(foodTrucks);
         mAdapter.notifyDataSetChanged();
 
     }

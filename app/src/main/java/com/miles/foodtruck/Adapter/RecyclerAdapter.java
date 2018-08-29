@@ -82,8 +82,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    public void update(ArrayList<AbstractTrackable> foodTrucks){
+    public void updateTrackables(ArrayList<AbstractTrackable> foodTrucks){
         this.mTrackables = foodTrucks;
+    }
+    public void updateTrackings(ArrayList<AbstractTracking> trackings){
+        this.mTrackings = trackings;
     }
 
 }
