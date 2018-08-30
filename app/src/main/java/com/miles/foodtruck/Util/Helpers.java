@@ -4,9 +4,13 @@ package com.miles.foodtruck.Util;
 import android.content.Context;
 import android.widget.Toast;
 import com.miles.foodtruck.Model.TrackingManager;
+import com.miles.foodtruck.Service.TrackingService;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -106,4 +110,40 @@ public class Helpers {
         }
         return generated;
     }
+
+
+
+
+    public static List<TrackingService.TrackingInfo> getTrackingInfoForTrackable(String trackableId, Date date, Context context, boolean removeNonStops){
+
+        TrackingService trackingService = TrackingService.getSingletonInstance(context);
+
+        //One whole day
+        int searchWindow = 60 * 24;
+
+        List<TrackingService.TrackingInfo> matched = trackingService.getTrackingInfoForTimeRange(date,searchWindow,0);
+
+        Iterator<TrackingService.TrackingInfo> iter = matched.iterator();
+
+
+        if (removeNonStops == true) {
+            while (iter.hasNext()) {
+                TrackingService.TrackingInfo trackingInfo = iter.next();
+
+                if (!trackableId.equals(Integer.toString(trackingInfo.trackableId))|| trackingInfo.stopTime == 0)
+                    iter.remove();
+            }
+        }
+        else{
+            while (iter.hasNext()) {
+                TrackingService.TrackingInfo trackingInfo = iter.next();
+
+                if (!trackableId.equals(Integer.toString(trackingInfo.trackableId)))
+                    iter.remove();
+            }
+
+        }
+
+        return matched;
+        }
 }

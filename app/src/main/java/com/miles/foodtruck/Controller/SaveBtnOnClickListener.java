@@ -99,22 +99,7 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
 
     private TrackingService.TrackingInfo checkDateTimeInRange(Context context){
 
-        TrackingService trackingService = TrackingService.getSingletonInstance(context);
-
-        //One whole day
-        int searchWindow = 60 * 24;
-
-        List<TrackingService.TrackingInfo> matched = trackingService.getTrackingInfoForTimeRange(dateSelected,searchWindow,0);
-
-        Iterator<TrackingService.TrackingInfo> iter = matched.iterator();
-
-
-        while (iter.hasNext()) {
-            TrackingService.TrackingInfo trackingInfo = iter.next();
-
-            if (!checkTrackableId(trackingInfo)||trackingInfo.stopTime==0)
-                iter.remove();
-        }
+        List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(bundle.getString(Constant.trackableId),dateSelected,context,true);
 
         for (int i = 0; i < matched.size(); i++) {
             Date start = matched.get(i).date;
