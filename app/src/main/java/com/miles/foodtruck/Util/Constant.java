@@ -29,6 +29,8 @@ public class Constant {
     public static final String EmptyMessage = "All fields cannot be empty!";
     public static final String WrongTimeMessage = "No matches for this time!";
     public static final String SavedMessage = "Tracking saved!";
+    public static final String RemovedMessage = "Tracking removed!";
+
 
 
 

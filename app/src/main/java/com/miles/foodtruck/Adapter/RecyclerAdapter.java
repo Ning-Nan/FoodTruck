@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.miles.foodtruck.Controller.ModifyTrackingListener;
+import com.miles.foodtruck.Controller.OnLongClickListener;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
 import com.miles.foodtruck.R;
@@ -57,17 +58,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         private TextView mTextView;
         private Button mButton;
+        private View view;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.list_text);
             mButton = itemView.findViewById(R.id.list_button);
+            this.view = itemView;
 
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
         if (mTrackings == null) {
             viewHolder.mTextView.setText(mTrackables.get(i).getOutPutString());
             viewHolder.mButton.setText(R.string.add_button);
@@ -78,8 +82,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             viewHolder.mTextView.setText(mTrackings.get(i).getOutPutString());
             viewHolder.mButton.setText(R.string.edit_button);
             viewHolder.mButton.setOnClickListener(new ModifyTrackingListener(null,mTrackings.get(i),mContext));
+            viewHolder.view.setOnLongClickListener(new OnLongClickListener("",mTrackings.get(i),this));
 
         }
+
     }
 
     public void updateTrackables(ArrayList<AbstractTrackable> foodTrucks){
@@ -87,6 +93,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
     public void updateTrackings(ArrayList<AbstractTracking> trackings){
         this.mTrackings = trackings;
+
     }
 
 }
