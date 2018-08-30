@@ -2,12 +2,8 @@ package com.miles.foodtruck.Util;
 
 
 import android.content.Context;
-
-import android.util.Log;
 import android.widget.Toast;
-
 import com.miles.foodtruck.Model.TrackingManager;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;

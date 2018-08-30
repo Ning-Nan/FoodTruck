@@ -1,6 +1,5 @@
 package com.miles.foodtruck.View;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +12,7 @@ import android.widget.Spinner;
 
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
+import com.miles.foodtruck.Controller.OnMenuItemSelect;
 import com.miles.foodtruck.Controller.SpinnerListener;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
@@ -41,20 +41,13 @@ public class MainActivity extends AppCompatActivity {
         initSpinner();
 
 
-
     }
 
     private void initRecyclerView(){
 
         mRecyclerView = findViewById(R.id.my_recycler_view);
-
-
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter
         mAdapter = new RecyclerAdapter(foodTrucks,null, this);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -92,14 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.show_trackings:
-                Intent intent = new Intent(this, TrackingListActivity.class);
-                startActivity(intent);
-                return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return OnMenuItemSelect.onOptionsItemSelected(item,this);
+
     }
 }

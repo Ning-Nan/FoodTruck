@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
+import com.miles.foodtruck.Controller.OnMenuItemSelect;
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
 import com.miles.foodtruck.Model.Tracking;
 import com.miles.foodtruck.Model.TrackingManager;
@@ -48,12 +49,8 @@ public class TrackingListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+
+        return OnMenuItemSelect.onOptionsItemSelected(item,this);
     }
 
 

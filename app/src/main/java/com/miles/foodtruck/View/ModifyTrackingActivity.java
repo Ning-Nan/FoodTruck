@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.miles.foodtruck.Controller.OnMenuItemSelect;
 import com.miles.foodtruck.Controller.PickerOnClickListener;
 import com.miles.foodtruck.Controller.SaveBtnOnClickListener;
 import com.miles.foodtruck.R;
@@ -72,12 +73,8 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+
+        return OnMenuItemSelect.onOptionsItemSelected(item,this);
     }
 
 
