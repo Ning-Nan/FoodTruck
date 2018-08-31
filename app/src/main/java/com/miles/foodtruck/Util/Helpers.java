@@ -111,9 +111,6 @@ public class Helpers {
         return generated;
     }
 
-
-
-
     public static List<TrackingService.TrackingInfo> getTrackingInfoForTrackable(String trackableId, Date date, Context context, boolean removeNonStops){
 
         TrackingService trackingService = TrackingService.getSingletonInstance(context);
@@ -145,5 +142,9 @@ public class Helpers {
         }
 
         return matched;
-        }
+    }
+
+
+
+
 }

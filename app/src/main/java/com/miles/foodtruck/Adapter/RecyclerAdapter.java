@@ -3,6 +3,7 @@ package com.miles.foodtruck.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,10 @@ import com.miles.foodtruck.Util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Observer{
 
 
     private List<AbstractTrackable> mTrackables;
@@ -52,6 +55,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         else{
             return mTrackings.size();
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        updateTrackings((ArrayList<AbstractTracking>) arg);
+        this.notifyDataSetChanged();
     }
 
     static  class ViewHolder extends RecyclerView.ViewHolder{
@@ -91,7 +100,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void updateTrackables(ArrayList<AbstractTrackable> foodTrucks){
         this.mTrackables = foodTrucks;
     }
-    public void updateTrackings(ArrayList<AbstractTracking> trackings){
+    private void updateTrackings(ArrayList<AbstractTracking> trackings){
         this.mTrackings = trackings;
 
     }

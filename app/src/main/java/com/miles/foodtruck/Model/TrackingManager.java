@@ -5,8 +5,9 @@ import com.miles.foodtruck.Model.Abstract.AbstractTracking;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-public class TrackingManager {
+public class TrackingManager extends Observable{
 
     private ArrayList<AbstractTracking> trackings = new ArrayList<>();
 
@@ -56,11 +57,21 @@ public class TrackingManager {
 
         }
 
+        setChanged();
+        notifyObservers(trackings);
+
     }
 
     public ArrayList<AbstractTracking> getAll(){
 
         return trackings;
+    }
+
+    public void remove(Tracking tracking)
+    {
+        trackings.remove(tracking);
+        setChanged();
+        notifyObservers(trackings);
     }
 }
 

@@ -40,12 +40,6 @@ public class TrackingListActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
-    protected void onResume() {
-        super.onResume();
-        mAdapter.updateTrackings(trackingManager.getAll());
-        mAdapter.notifyDataSetChanged();
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,6 +65,7 @@ public class TrackingListActivity extends AppCompatActivity {
 
         // specify an adapter
         mAdapter = new RecyclerAdapter(null,trackings, this);
+        trackingManager.addObserver(mAdapter);
         mRecyclerView.setAdapter(mAdapter);
 
     }

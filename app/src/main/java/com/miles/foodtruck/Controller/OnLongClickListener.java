@@ -6,6 +6,7 @@ import android.view.View;
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
 import com.miles.foodtruck.Model.TrackacbleManager;
+import com.miles.foodtruck.Model.Tracking;
 import com.miles.foodtruck.Model.TrackingManager;
 import com.miles.foodtruck.Service.TrackingService;
 import com.miles.foodtruck.Util.Constant;
@@ -35,13 +36,17 @@ public class OnLongClickListener implements View.OnLongClickListener{
 
             List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(trackableId,new Date(),v.getContext(),false);
 
+            for (int i = 0; i < matched.size(); i++) {
+
+                logTrackingInfo(matched.get(i));
+            }
+
+
         }
         else
         {
-            ArrayList<AbstractTracking> trackings=TrackingManager.getSingletonInstance().getAll();
-            trackings.remove(tracking);
-            adapter.updateTrackings(trackings);
-            adapter.notifyDataSetChanged();
+
+            TrackingManager.getSingletonInstance().remove((Tracking) tracking);
             Helpers.callToast(Constant.RemovedMessage, v.getContext());
 
         }
@@ -49,5 +54,13 @@ public class OnLongClickListener implements View.OnLongClickListener{
 
 
         return false;
+    }
+
+
+    private void logTrackingInfo(TrackingService.TrackingInfo trackingInfo){
+
+        //TO DO
+
+
     }
 }

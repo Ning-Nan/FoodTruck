@@ -99,7 +99,7 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
 
     private TrackingService.TrackingInfo checkDateTimeInRange(Context context){
 
-        List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(bundle.getString(Constant.trackableId),dateSelected,context,true);
+        List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(Integer.toString(bundle.getInt(Constant.trackableId)),dateSelected,context,true);
 
         for (int i = 0; i < matched.size(); i++) {
             Date start = matched.get(i).date;
