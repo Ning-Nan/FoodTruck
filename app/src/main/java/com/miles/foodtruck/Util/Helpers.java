@@ -5,9 +5,9 @@ import android.content.Context;
 import android.widget.Toast;
 import com.miles.foodtruck.Model.TrackingManager;
 import com.miles.foodtruck.Service.TrackingService;
-
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Helpers {
 
+    //From date time text to picker acceptable int date values
     public static int[] extractDateTime(String type, String str) {
 
         switch (type) {
@@ -62,6 +63,7 @@ public class Helpers {
     }
 
 
+    //String to Date
     public static Date strToDate(String str) {
 
         Date date = new Date();
@@ -89,6 +91,8 @@ public class Helpers {
     }
 
 
+
+    //get random string
     public static String random(int length, TrackingManager trackingManager) {
 
         StringBuilder builder = new StringBuilder(length);
@@ -105,23 +109,21 @@ public class Helpers {
                 generated = random(5, trackingManager);
                 break;
             }
-
-
         }
         return generated;
     }
 
+    //Get tracking info list for the selected trackable
     public static List<TrackingService.TrackingInfo> getTrackingInfoForTrackable(String trackableId, Date date, Context context, boolean removeNonStops){
 
         TrackingService trackingService = TrackingService.getSingletonInstance(context);
 
-        //One whole day
+        //One whole day (For A1)
         int searchWindow = 60 * 24;
 
         List<TrackingService.TrackingInfo> matched = trackingService.getTrackingInfoForTimeRange(date,searchWindow,0);
 
         Iterator<TrackingService.TrackingInfo> iter = matched.iterator();
-
 
         if (removeNonStops == true) {
             while (iter.hasNext()) {
@@ -144,6 +146,24 @@ public class Helpers {
         return matched;
     }
 
+    //Generate spinner time slots for given tracking info list.
+    public static ArrayList<String> getSpinnerItem(List<TrackingService.TrackingInfo> trackingInfos){
+
+        ArrayList<String> spinnerItems = new ArrayList<>();
+
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+
+        for (int i = 0; i < trackingInfos.size(); i++) {
+
+            String str = dateFormat.format(trackingInfos.get(i).date)
+                    + " Stop: " + trackingInfos.get(i).stopTime + " minutes";
+
+            spinnerItems.add(str);
+        }
+
+        return spinnerItems;
+
+    }
 
 
 

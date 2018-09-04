@@ -15,12 +15,6 @@ public class Constant {
 
 
 
-
-
-
-    public static final String DeleteOperation = "Del";
-
-
     public static final String PickerText = "Text";
     public static final String Picker = "Type";
     public static final String DatePicker = "Date";

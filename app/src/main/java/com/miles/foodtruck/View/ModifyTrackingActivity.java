@@ -4,22 +4,26 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.miles.foodtruck.Controller.OnMenuItemSelect;
 import com.miles.foodtruck.Controller.PickerOnClickListener;
 import com.miles.foodtruck.Controller.SaveBtnOnClickListener;
+import com.miles.foodtruck.Controller.TimeSlotSpinner;
 import com.miles.foodtruck.R;
+import com.miles.foodtruck.Service.TrackingService;
 import com.miles.foodtruck.Util.Constant;
-
-import java.text.SimpleDateFormat;
+import com.miles.foodtruck.Util.Helpers;
 import java.util.Date;
+import java.util.List;
 
 public class ModifyTrackingActivity extends AppCompatActivity {
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +33,24 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        Intent intent = getIntent();
-
-        initView(intent);
+        intent = getIntent();
+        initView();
 
     }
 
-
-    private void initView(Intent intent){
+    //Init the UI with passed in values.
+    private void initView(){
 
         String operation = intent.getStringExtra(Constant.operation);
-        TextView trackableTitle = findViewById(R.id.trackable_name);
-        EditText datePicker = findViewById(R.id.date_picker);
-        EditText timePicker = findViewById(R.id.time_picker);
-        EditText trackingTitle = findViewById(R.id.input_tracking_name);
-        Button saveBtn = findViewById(R.id.save_button);
+        TextView trackableTitle = (TextView) findViewById(R.id.trackable_name);
+        EditText datePicker = (EditText) findViewById(R.id.date_picker);
+        EditText timePicker = (EditText) findViewById(R.id.time_picker);
+        EditText trackingTitle = (EditText) findViewById(R.id.input_tracking_name);
+        Button saveBtn = (Button) findViewById(R.id.save_button);
 
         trackableTitle.setText(intent.getStringExtra(Constant.trackableName));
 
+        //If is editing, should get values that already set
         if (operation.equals(Constant.EditOperation))
         {
             trackingTitle.setText(intent.getStringExtra(Constant.trackingTitle));
@@ -57,11 +60,34 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         }
         datePicker.setOnClickListener(new PickerOnClickListener(datePicker, getSupportFragmentManager()));
         timePicker.setOnClickListener(new PickerOnClickListener(timePicker, getSupportFragmentManager()));
-        saveBtn.setOnClickListener(new SaveBtnOnClickListener(intent.getExtras(),trackingTitle,
-                datePicker,timePicker,this));
+
+        SaveBtnOnClickListener saveBtnOnClickListener= new SaveBtnOnClickListener(intent.getExtras(),trackingTitle,
+                datePicker,timePicker,this);
+        saveBtn.setOnClickListener(saveBtnOnClickListener);
+        TextView location = (TextView) findViewById(R.id.location_text);
+        initSpinner(saveBtnOnClickListener,location);
 
 
     }
+
+    //init the time slots. Passed in listener used for updating the selected time slot.
+    private void initSpinner(SaveBtnOnClickListener saveBtnOnClickListener, TextView location){
+
+        Spinner spinner = (Spinner) findViewById(R.id.time_slot_spinner);
+
+        List<TrackingService.TrackingInfo> availables = Helpers.getTrackingInfoForTrackable(Integer.toString(intent.getExtras().getInt(Constant.trackableId)),new Date(),this,true);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,Helpers.getSpinnerItem(availables));
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new TimeSlotSpinner(availables,saveBtnOnClickListener,location));
+
+    }
+
 
 
 

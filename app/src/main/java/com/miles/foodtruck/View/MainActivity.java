@@ -9,15 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
-
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
 import com.miles.foodtruck.Controller.OnMenuItemSelect;
-import com.miles.foodtruck.Controller.SpinnerListener;
+import com.miles.foodtruck.Controller.CategoriesSpinnerListener;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Model.TrackacbleManager;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -40,18 +37,18 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         initSpinner();
 
-
     }
 
     private void initRecyclerView(){
 
-        mRecyclerView = findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RecyclerAdapter(foodTrucks,null, this);
         mRecyclerView.setAdapter(mAdapter);
 
     }
+
     private void initTrackable(){
 
         try {
@@ -64,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSpinner(){
 
-
-        Spinner spinner = findViewById(R.id.truck_spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.truck_spinner);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrackacbleManager.getCategories());
 
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(new SpinnerListener(foodTrucks,mAdapter));
+        spinner.setOnItemSelectedListener(new CategoriesSpinnerListener(foodTrucks,mAdapter));
     }
 
     @Override

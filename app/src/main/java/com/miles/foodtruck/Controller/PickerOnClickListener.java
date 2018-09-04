@@ -5,12 +5,14 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.EditText;
-
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.Util.Constant;
 import com.miles.foodtruck.View.Fragments.DateTimePickerFragment;
 
 
+/*
+    Reusable Picker listener for date and time
+ */
 public class PickerOnClickListener implements View.OnClickListener{
 
     private EditText editText;
@@ -31,6 +33,7 @@ public class PickerOnClickListener implements View.OnClickListener{
         Bundle bundle = new Bundle();
         bundle.putString(Constant.PickerText,editText.getText().toString());
 
+        //Show different picker
         switch (editText.getId()){
             case R.id.date_picker:
                 bundle.putString(Constant.Picker,Constant.DatePicker);

@@ -18,7 +18,6 @@ public class DateTimePickerFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-
         switch (getArguments().getString(Constant.Picker)){
 
             case Constant.DatePicker:
@@ -57,7 +56,7 @@ public class DateTimePickerFragment extends DialogFragment {
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
         }
-        EditText editText = getActivity().findViewById(R.id.date_picker);
+        EditText editText = (EditText) getActivity().findViewById(R.id.date_picker);
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), new OnDateTimeSelectListener(editText), year, month, day);
 
@@ -66,7 +65,6 @@ public class DateTimePickerFragment extends DialogFragment {
     private Dialog callTimeDialog(){
 
         int hour, minute;
-
 
         if (!getArguments().getString(Constant.PickerText).equals(""))
         {
@@ -81,7 +79,7 @@ public class DateTimePickerFragment extends DialogFragment {
             minute = c.get(Calendar.MINUTE);
 
         }
-        EditText editText = getActivity().findViewById(R.id.time_picker);
+        EditText editText = (EditText) getActivity().findViewById(R.id.time_picker);
         // Create a new instance of DatePickerDialog and return it
         return new TimePickerDialog(getActivity(), new OnDateTimeSelectListener(editText), hour, minute,true);
 

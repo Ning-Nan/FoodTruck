@@ -2,7 +2,6 @@ package com.miles.foodtruck.Model;
 
 
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,9 +11,10 @@ import java.util.HashSet;
 
 public class TrackacbleManager {
 
-private static ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
-private static ArrayList<String> categories = new ArrayList<>();
+    private static ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
+    private static ArrayList<String> categories = new ArrayList<>();
 
+    //Read from text
     public static ArrayList<AbstractTrackable> readTrackableList(InputStream input) throws IOException {
 
         if (foodTrucks.size() == 0)
@@ -84,7 +84,6 @@ private static ArrayList<String> categories = new ArrayList<>();
             {
                 foodTrucksInCategory.add(foodTrucks.get(i));
             }
-
         }
 
         return foodTrucksInCategory;

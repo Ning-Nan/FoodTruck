@@ -85,7 +85,7 @@ public abstract class AbstractTracking implements TrackingInterface{
     public String getOutPutString() {
 
         return "Title: " + getTitle() + "\n"
-                + "Meet Time " + getMeetTime() + "\n"
-                + "Meet Location " + getMeetLocation();
+                + "Meet Time: " + getMeetTime() + "\n"
+                + "Meet Location: " + getMeetLocation();
     }
 }

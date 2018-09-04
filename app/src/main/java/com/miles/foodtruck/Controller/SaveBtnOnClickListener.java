@@ -1,24 +1,16 @@
 package com.miles.foodtruck.Controller;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
 import com.miles.foodtruck.Model.Tracking;
 import com.miles.foodtruck.Model.TrackingManager;
 import com.miles.foodtruck.Service.TrackingService;
 import com.miles.foodtruck.Util.Constant;
 import com.miles.foodtruck.Util.Helpers;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 
 public class SaveBtnOnClickListener implements View.OnClickListener {
@@ -27,8 +19,8 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
     private EditText dateText;
     private EditText timeText;
     private EditText titleText;
-    private Date dateSelected;
     private AppCompatActivity activity;
+    private TrackingService.TrackingInfo trackingInfoSlected;
 
 
 
@@ -44,36 +36,37 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-
+        //Check no filed is empty
         if (titleText.getText().toString().equals("") ||dateText.getText().toString().equals("")||timeText.getText().toString().equals("") )
         {
             Helpers.callToast(Constant.EmptyMessage,v.getContext());
             return;
         }
 
+        //Date from pickers.
         String searchDate = dateText.getText().toString() + " " + timeText.getText().toString();
+        Date dateSelected = Helpers.strToDate(searchDate);
 
-        dateSelected = Helpers.strToDate(searchDate);
-
-        TrackingService.TrackingInfo trackingInfo = checkDateTimeInRange(v.getContext());
-
-        if (trackingInfo == null)
+        //Check if the date is in the selected time slot
+        if (checkDateTimeInRange(dateSelected) == false)
         {
             Helpers.callToast(Constant.WrongTimeMessage, v.getContext());
             return;
         }
 
+        //New tracking
         AbstractTracking tracking = new Tracking();
-
         tracking.setTitle(titleText.getText().toString());
         tracking.setMeetTime(dateSelected);
-        tracking.setMeetLocation(Double.toString(trackingInfo.latitude) + "," + Double.toString(trackingInfo.longitude));
-        tracking.setTargetStartTime(trackingInfo.date);
-        tracking.setTargetEndTime(Helpers.caculateEndTime(trackingInfo.date,trackingInfo.stopTime));
+        tracking.setMeetLocation(Double.toString(trackingInfoSlected.latitude) + "," + Double.toString(trackingInfoSlected.longitude));
+        tracking.setTargetStartTime(trackingInfoSlected.date);
+        tracking.setTargetEndTime(Helpers.caculateEndTime(trackingInfoSlected.date,trackingInfoSlected.stopTime));
         tracking.setTrackableId(bundle.getInt(Constant.trackableId));
 
         TrackingManager trackingManager = TrackingManager.getSingletonInstance();
 
+        //Edit - Set same id
+        //Add - generate random string id
         if (bundle.getString(Constant.trackingId) !=null)
         {
             tracking.setTrackingId(bundle.getString(Constant.trackingId));
@@ -85,46 +78,33 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
         }
 
         trackingManager.addToTracking(tracking);
-
         Helpers.callToast(Constant.SavedMessage, v.getContext());
-
         activity.finish();
 
-
-
-
-
     }
 
 
-    private TrackingService.TrackingInfo checkDateTimeInRange(Context context){
+    //Check if the selected date in that time slot from spinner
+    private boolean checkDateTimeInRange(Date slectedDate){
 
-        List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(Integer.toString(bundle.getInt(Constant.trackableId)),dateSelected,context,true);
+        Date start = trackingInfoSlected.date;
+        Date end = Helpers.caculateEndTime(start,trackingInfoSlected.stopTime);
 
-        for (int i = 0; i < matched.size(); i++) {
-            Date start = matched.get(i).date;
-            Date end = Helpers.caculateEndTime(start,matched.get(i).stopTime);
-
-            if ( (dateSelected.after(start) && dateSelected.before(end)) || dateSelected.getTime() == start.getTime()||
-                    dateSelected.getTime() == end.getTime())
-            {
-                return matched.get(i);
-            }
-
-
-        }
-
-        return null;
-
-    }
-
-    private boolean checkTrackableId (TrackingService.TrackingInfo trackingInfo){
-
-        if (trackingInfo.trackableId != bundle.getInt(Constant.trackableId))
+        if ( (slectedDate.after(start) && slectedDate.before(end)) || slectedDate.getTime() == start.getTime()||
+                slectedDate.getTime() == end.getTime())
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
+
+    }
+
+
+    //Used by spinner to update the selected time slot
+    public void setTimeSelected(TrackingService.TrackingInfo trackingInfo){
+
+        trackingInfoSlected = trackingInfo;
+
     }
 
 

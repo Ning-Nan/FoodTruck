@@ -10,7 +10,11 @@
     <string name="tracking_name_label">Tracking Name:</string>
     <string name="date_picker_label">Date:</string>
     <string name="time_picker_label">Time:</string>
+    <string name="time_slot_spinner_label">Select Time:</string>
     <string name="save_tracking_button">Save</string>
+
+    <string name="location_label">Location: </string>
+
 
 
 

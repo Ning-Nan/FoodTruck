@@ -5,24 +5,26 @@ import android.widget.AdapterView;
 import com.miles.foodtruck.Adapter.RecyclerAdapter;
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.Model.TrackacbleManager;
-
 import java.util.ArrayList;
 
-public class SpinnerListener implements AdapterView.OnItemSelectedListener {
+
+public class CategoriesSpinnerListener implements AdapterView.OnItemSelectedListener {
 
     private ArrayList<AbstractTrackable> foodTrucks;
     private RecyclerAdapter mAdapter;
 
-    public SpinnerListener(ArrayList<AbstractTrackable> foodTrucks, RecyclerAdapter mAdapter) {
+    public CategoriesSpinnerListener(ArrayList<AbstractTrackable> foodTrucks, RecyclerAdapter mAdapter) {
 
         this.foodTrucks = foodTrucks;
         this.mAdapter = mAdapter;
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
+        //Position 0 is "All Categories"
         if (position == 0)
         {
             foodTrucks = TrackacbleManager.getTrackableList();
@@ -33,7 +35,7 @@ public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
         }
 
-
+        //Update Recycler adapter
         mAdapter.updateTrackables(foodTrucks);
         mAdapter.notifyDataSetChanged();
 

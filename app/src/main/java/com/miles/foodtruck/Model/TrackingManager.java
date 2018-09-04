@@ -2,7 +2,6 @@ package com.miles.foodtruck.Model;
 
 
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
@@ -31,7 +30,7 @@ public class TrackingManager extends Observable{
     {
         Iterator<AbstractTracking> iter = trackings.iterator();
 
-
+        //Check same id
         while (iter.hasNext()) {
            AbstractTracking tempTracking = iter.next();
             if (tempTracking.getTrackingId().equals(tracking.getTrackingId()))
@@ -40,8 +39,8 @@ public class TrackingManager extends Observable{
             }
         }
 
+        //Sort by date
         int position = -1;
-
         for (int i = 0; i < trackings.size(); i++) {
             if (tracking.getMeetTime().before(trackings.get(i).getMeetTime())) {
 
@@ -57,6 +56,7 @@ public class TrackingManager extends Observable{
 
         }
 
+        //Notify tracking list adapter to update
         setChanged();
         notifyObservers(trackings);
 

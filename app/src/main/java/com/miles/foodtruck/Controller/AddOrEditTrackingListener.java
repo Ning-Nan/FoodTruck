@@ -3,18 +3,18 @@ package com.miles.foodtruck.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-
-
 import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
 import com.miles.foodtruck.Model.Abstract.AbstractTracking;
 import com.miles.foodtruck.Model.TrackacbleManager;
 import com.miles.foodtruck.Util.Constant;
 import com.miles.foodtruck.View.ModifyTrackingActivity;
-
 import java.text.SimpleDateFormat;
 
 
-public class ModifyTrackingListener implements View.OnClickListener {
+/*
+    Reusable button listener for both tracking and trackables.
+ */
+public class AddOrEditTrackingListener implements View.OnClickListener {
 
     private AbstractTrackable foodTruck;
     private AbstractTracking tracking;
@@ -22,18 +22,20 @@ public class ModifyTrackingListener implements View.OnClickListener {
 
 
 
-    public ModifyTrackingListener(AbstractTrackable foodTruck, AbstractTracking tracking, Context context){
+    public AddOrEditTrackingListener(AbstractTrackable foodTruck, AbstractTracking tracking, Context context){
         this.foodTruck = foodTruck;
         this.tracking = tracking;
         this.context = context;
     }
+
 
     @Override
     public void onClick(View v) {
 
         Intent intent = new Intent(context, ModifyTrackingActivity.class);
 
-        //case edit tracking
+        //case edit tracking (From Tracking List)
+        //pass values that UI need and also the controllers need.
         if (foodTruck == null){
 
             intent.putExtra(Constant.operation, Constant.EditOperation);
@@ -41,9 +43,6 @@ public class ModifyTrackingListener implements View.OnClickListener {
             intent.putExtra(Constant.trackableName, TrackacbleManager.getTrackable(tracking.getTrackableId()).getName());
             intent.putExtra(Constant.trackingTitle, tracking.getTitle());
             intent.putExtra(Constant.trackingId, tracking.getTrackingId());
-
-
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             intent.putExtra(Constant.dateText,dateFormat.format(tracking.getMeetTime()));
             dateFormat = new SimpleDateFormat("h:mm:ss aa");
@@ -51,13 +50,14 @@ public class ModifyTrackingListener implements View.OnClickListener {
 
         }
 
-        //case add new tracking
+        //case add new
         else
         {
             intent.putExtra(Constant.operation, Constant.AddOperation);
             intent.putExtra(Constant.trackableId,foodTruck.getId());
             intent.putExtra(Constant.trackableName,foodTruck.getName());
         }
+
         context.startActivity(intent);
 
 

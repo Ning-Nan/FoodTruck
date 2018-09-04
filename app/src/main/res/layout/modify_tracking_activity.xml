@@ -39,7 +39,7 @@
         android:text="@string/date_picker_label"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toStartOf="@+id/date_picker"
-        app:layout_constraintTop_toBottomOf="@+id/label_tracking_name" />
+        app:layout_constraintTop_toBottomOf="@+id/label_location" />
 
     <EditText
         android:id="@+id/input_tracking_name"
@@ -55,7 +55,7 @@
         android:id="@+id/date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/margin"
         android:clickable="true"
         android:ems="10"
         android:focusable="false"
@@ -97,6 +97,46 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_time_picker" />
+
+    <Spinner
+        android:id="@+id/time_slot_spinner"
+        android:layout_width="@dimen/input_width"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/label_time_slot_spinner"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/label_time_slot_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginTop="@dimen/large_margin"
+        android:text="@string/time_slot_spinner_label"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toStartOf="@+id/time_slot_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/label_tracking_name"
+        />
+
+    <TextView
+        android:id="@+id/label_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginTop="@dimen/large_margin"
+        android:text="@string/location_label"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toStartOf="@+id/location_text"
+        app:layout_constraintTop_toBottomOf="@+id/label_time_slot_spinner" />
+
+    <TextView
+        android:id="@+id/location_text"
+        android:layout_width="@dimen/input_width"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/label_location"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
