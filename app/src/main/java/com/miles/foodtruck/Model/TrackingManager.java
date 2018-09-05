@@ -73,6 +73,22 @@ public class TrackingManager extends Observable{
         setChanged();
         notifyObservers(trackings);
     }
+
+    public AbstractTracking get(String id){
+
+        for (int i = 0; i <trackings.size() ; i++) {
+
+            if (trackings.get(i).getTrackingId().equals(id))
+            {
+                return trackings.get(i);
+            }
+
+        }
+
+        return null;
+
+
+    }
 }
 
 

@@ -84,7 +84,10 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(new TimeSlotSpinner(availables,saveBtnOnClickListener,location));
+        TimeSlotSpinner timeSlotSpinner = new TimeSlotSpinner(availables,saveBtnOnClickListener,location);
+        spinner.setOnItemSelectedListener(timeSlotSpinner);
+
+        spinner.setSelection(timeSlotSpinner.initSelected(intent.getStringExtra(Constant.trackingId)));
 
     }
 

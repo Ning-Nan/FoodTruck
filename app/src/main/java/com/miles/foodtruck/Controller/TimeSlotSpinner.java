@@ -3,7 +3,13 @@ package com.miles.foodtruck.Controller;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
+import com.miles.foodtruck.Model.Abstract.AbstractTracking;
+import com.miles.foodtruck.Model.TrackingManager;
 import com.miles.foodtruck.Service.TrackingService;
+import com.miles.foodtruck.Util.Helpers;
+
+import java.util.Date;
 import java.util.List;
 
 public class TimeSlotSpinner implements AdapterView.OnItemSelectedListener {
@@ -31,6 +37,34 @@ public class TimeSlotSpinner implements AdapterView.OnItemSelectedListener {
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    //For edit case, slot must be setup correctly
+    public int initSelected(String trackingId){
+
+        if (trackingId != null){
+
+            AbstractTracking tracking = TrackingManager.getSingletonInstance().get(trackingId);
+            Date meetDate = tracking.getMeetTime();
+
+            for (int i = 0; i < trackingInfos.size(); i++) {
+
+                Date option = trackingInfos.get(i).date;
+                Date end = Helpers.caculateEndTime(option,trackingInfos.get(i).stopTime);
+
+                if(meetDate.before(option) || meetDate.after(end))
+                {
+                    continue;
+                }
+
+                return i;
+
+            }
+        }
+
+        return 0;
+
 
     }
 }
