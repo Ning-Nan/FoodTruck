@@ -1,4 +1,4 @@
-package com.miles.foodtruck.Controller;
+package com.miles.foodtruck.controller;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.EditText;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.Util.Constant;
-import com.miles.foodtruck.View.Fragments.DateTimePickerFragment;
+import com.miles.foodtruck.util.Constant;
+import com.miles.foodtruck.view.fragments.DateTimePickerFragment;
 
 
 /*

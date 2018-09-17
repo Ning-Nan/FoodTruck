@@ -1,13 +1,13 @@
-package com.miles.foodtruck.Controller;
+package com.miles.foodtruck.controller;
 
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.miles.foodtruck.Model.Abstract.AbstractTracking;
-import com.miles.foodtruck.Model.TrackingManager;
-import com.miles.foodtruck.Service.TrackingService;
-import com.miles.foodtruck.Util.Helpers;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
+import com.miles.foodtruck.model.TrackingManager;
+import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.util.Helpers;
 
 import java.util.Date;
 import java.util.List;

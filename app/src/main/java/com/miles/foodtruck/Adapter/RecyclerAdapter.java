@@ -1,4 +1,4 @@
-package com.miles.foodtruck.Adapter;
+package com.miles.foodtruck.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import com.miles.foodtruck.Controller.AddOrEditTrackingListener;
-import com.miles.foodtruck.Controller.OnLongClickListener;
-import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
-import com.miles.foodtruck.Model.Abstract.AbstractTracking;
+import com.miles.foodtruck.controller.AddOrEditTrackingListener;
+import com.miles.foodtruck.controller.OnLongClickListener;
+import com.miles.foodtruck.model.abstracts.AbstractTrackable;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.R;
 import java.util.ArrayList;
 import java.util.List;

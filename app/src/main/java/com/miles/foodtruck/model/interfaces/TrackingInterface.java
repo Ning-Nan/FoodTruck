@@ -1,4 +1,4 @@
-package com.miles.foodtruck.Model.Interface;
+package com.miles.foodtruck.model.interfaces;
 
 public interface TrackingInterface {
     String getOutPutString();

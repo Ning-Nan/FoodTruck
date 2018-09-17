@@ -1,6 +1,6 @@
-package com.miles.foodtruck.Model.Abstract;
+package com.miles.foodtruck.model.abstracts;
 
-import com.miles.foodtruck.Model.Interface.TrackingInterface;
+import com.miles.foodtruck.model.interfaces.TrackingInterface;
 
 import java.util.Date;
 

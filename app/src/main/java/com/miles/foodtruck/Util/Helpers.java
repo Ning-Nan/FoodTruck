@@ -1,10 +1,10 @@
-package com.miles.foodtruck.Util;
+package com.miles.foodtruck.util;
 
 
 import android.content.Context;
 import android.widget.Toast;
-import com.miles.foodtruck.Model.TrackingManager;
-import com.miles.foodtruck.Service.TrackingService;
+import com.miles.foodtruck.model.TrackingManager;
+import com.miles.foodtruck.service.TrackingService;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;

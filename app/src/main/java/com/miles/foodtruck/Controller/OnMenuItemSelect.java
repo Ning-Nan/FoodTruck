@@ -1,10 +1,10 @@
-package com.miles.foodtruck.Controller;
+package com.miles.foodtruck.controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.View.TrackingListActivity;
+import com.miles.foodtruck.view.TrackingListActivity;
 
 /*
     Menu action for all activities.

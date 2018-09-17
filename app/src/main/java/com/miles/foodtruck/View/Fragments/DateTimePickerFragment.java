@@ -1,4 +1,4 @@
-package com.miles.foodtruck.View.Fragments;
+package com.miles.foodtruck.view.fragments;
 
 
 import android.app.DatePickerDialog;
@@ -7,10 +7,10 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
-import com.miles.foodtruck.Controller.OnDateTimeSelectListener;
+import com.miles.foodtruck.controller.OnDateTimeSelectListener;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.Util.Constant;
-import com.miles.foodtruck.Util.Helpers;
+import com.miles.foodtruck.util.Constant;
+import com.miles.foodtruck.util.Helpers;
 import java.util.Calendar;
 
 public class DateTimePickerFragment extends DialogFragment {

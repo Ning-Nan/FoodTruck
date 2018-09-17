@@ -1,4 +1,4 @@
-package com.miles.foodtruck.Controller;
+package com.miles.foodtruck.controller;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

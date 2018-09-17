@@ -1,4 +1,4 @@
-package com.miles.foodtruck.View;
+package com.miles.foodtruck.view;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import com.miles.foodtruck.Adapter.RecyclerAdapter;
-import com.miles.foodtruck.Controller.OnMenuItemSelect;
-import com.miles.foodtruck.Model.Abstract.AbstractTracking;
-import com.miles.foodtruck.Model.TrackingManager;
+import com.miles.foodtruck.adapter.RecyclerAdapter;
+import com.miles.foodtruck.controller.OnMenuItemSelect;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
+import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.R;
 
 import java.util.ArrayList;

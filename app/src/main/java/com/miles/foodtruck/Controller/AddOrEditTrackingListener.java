@@ -1,13 +1,13 @@
-package com.miles.foodtruck.Controller;
+package com.miles.foodtruck.controller;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
-import com.miles.foodtruck.Model.Abstract.AbstractTracking;
-import com.miles.foodtruck.Model.TrackacbleManager;
-import com.miles.foodtruck.Util.Constant;
-import com.miles.foodtruck.View.ModifyTrackingActivity;
+import com.miles.foodtruck.model.abstracts.AbstractTrackable;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
+import com.miles.foodtruck.model.TrackacbleManager;
+import com.miles.foodtruck.util.Constant;
+import com.miles.foodtruck.view.ModifyTrackingActivity;
 import java.text.SimpleDateFormat;
 
 

@@ -1,4 +1,4 @@
-package com.miles.foodtruck.View;
+package com.miles.foodtruck.view;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -10,14 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.miles.foodtruck.Controller.OnMenuItemSelect;
-import com.miles.foodtruck.Controller.PickerOnClickListener;
-import com.miles.foodtruck.Controller.SaveBtnOnClickListener;
-import com.miles.foodtruck.Controller.TimeSlotSpinner;
+import com.miles.foodtruck.controller.OnMenuItemSelect;
+import com.miles.foodtruck.controller.PickerOnClickListener;
+import com.miles.foodtruck.controller.SaveBtnOnClickListener;
+import com.miles.foodtruck.controller.TimeSlotSpinner;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.Service.TrackingService;
-import com.miles.foodtruck.Util.Constant;
-import com.miles.foodtruck.Util.Helpers;
+import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.util.Constant;
+import com.miles.foodtruck.util.Helpers;
 import java.util.Date;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.miles.foodtruck.Service;
+package com.miles.foodtruck.service;
 
 // simulated tracking service by Caspar for MAD s2, 2018
 // Usage: add this class to project in appropriate package

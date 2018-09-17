@@ -1,7 +1,7 @@
-package com.miles.foodtruck.Model;
+package com.miles.foodtruck.model;
 
 
-import com.miles.foodtruck.Model.Abstract.AbstractTracking;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;

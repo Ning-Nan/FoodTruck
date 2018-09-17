@@ -1,4 +1,4 @@
-package com.miles.foodtruck.Util;
+package com.miles.foodtruck.util;
 
 public class Constant {
     public static final String operation = "Operation";

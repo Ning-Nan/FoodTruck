@@ -1,6 +1,6 @@
-package com.miles.foodtruck.Model.Abstract;
+package com.miles.foodtruck.model.abstracts;
 
-import com.miles.foodtruck.Model.Interface.TrackableInterface;
+import com.miles.foodtruck.model.interfaces.TrackableInterface;
 
 public abstract class AbstractTrackable implements TrackableInterface{
 

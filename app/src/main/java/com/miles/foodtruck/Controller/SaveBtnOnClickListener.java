@@ -1,15 +1,15 @@
-package com.miles.foodtruck.Controller;
+package com.miles.foodtruck.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import com.miles.foodtruck.Model.Abstract.AbstractTracking;
-import com.miles.foodtruck.Model.Tracking;
-import com.miles.foodtruck.Model.TrackingManager;
-import com.miles.foodtruck.Service.TrackingService;
-import com.miles.foodtruck.Util.Constant;
-import com.miles.foodtruck.Util.Helpers;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
+import com.miles.foodtruck.model.Tracking;
+import com.miles.foodtruck.model.TrackingManager;
+import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.util.Constant;
+import com.miles.foodtruck.util.Helpers;
 import java.util.Date;
 
 

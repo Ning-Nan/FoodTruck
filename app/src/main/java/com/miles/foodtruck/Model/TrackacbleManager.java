@@ -1,7 +1,7 @@
-package com.miles.foodtruck.Model;
+package com.miles.foodtruck.model;
 
 
-import com.miles.foodtruck.Model.Abstract.AbstractTrackable;
+import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
