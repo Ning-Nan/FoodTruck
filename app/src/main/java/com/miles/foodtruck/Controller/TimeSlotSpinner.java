@@ -18,7 +18,9 @@ public class TimeSlotSpinner implements AdapterView.OnItemSelectedListener {
     private SaveBtnOnClickListener saveBtnOnClickListener;
     private TextView location;
 
-    public TimeSlotSpinner(List<TrackingService.TrackingInfo> trackingInfos, SaveBtnOnClickListener saveBtnOnClickListener, TextView location){
+    public TimeSlotSpinner(List<TrackingService.TrackingInfo> trackingInfos,
+                           SaveBtnOnClickListener saveBtnOnClickListener,
+                           TextView location){
 
         this.trackingInfos = trackingInfos;
         this.saveBtnOnClickListener = saveBtnOnClickListener;
@@ -31,7 +33,8 @@ public class TimeSlotSpinner implements AdapterView.OnItemSelectedListener {
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         saveBtnOnClickListener.setTimeSelected(trackingInfos.get(position));
-        location.setText(Double.toString(trackingInfos.get(position).latitude) + "," + Double.toString(trackingInfos.get(position).longitude));
+        location.setText(Double.toString(trackingInfos.get(position).latitude)
+                + "," + Double.toString(trackingInfos.get(position).longitude));
 
     }
 

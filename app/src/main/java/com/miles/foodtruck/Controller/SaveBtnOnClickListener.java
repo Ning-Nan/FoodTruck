@@ -24,7 +24,8 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
 
 
 
-    public SaveBtnOnClickListener(Bundle bundle, EditText titleText, EditText dateText, EditText timeText, AppCompatActivity activity){
+    public SaveBtnOnClickListener(Bundle bundle, EditText titleText,
+                                  EditText dateText, EditText timeText, AppCompatActivity activity){
 
         this.bundle = bundle;
         this.titleText = titleText;
@@ -37,14 +38,16 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
     public void onClick(View v) {
 
         //Check no filed is empty
-        if (titleText.getText().toString().equals("") ||dateText.getText().toString().equals("")||timeText.getText().toString().equals("") )
+        if (titleText.getText().toString().equals("") ||dateText.getText().toString().equals("")
+                ||timeText.getText().toString().equals("") )
         {
             Helpers.callToast(Constant.EmptyMessage,v.getContext());
             return;
         }
 
         //Date from pickers.
-        String searchDate = dateText.getText().toString() + " " + timeText.getText().toString();
+        String searchDate = dateText.getText().toString() + " " +
+                timeText.getText().toString();
         Date dateSelected = Helpers.strToDate(searchDate);
 
         //Check if the date is in the selected time slot
@@ -58,9 +61,11 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
         AbstractTracking tracking = new Tracking();
         tracking.setTitle(titleText.getText().toString());
         tracking.setMeetTime(dateSelected);
-        tracking.setMeetLocation(Double.toString(trackingInfoSlected.latitude) + "," + Double.toString(trackingInfoSlected.longitude));
+        tracking.setMeetLocation(Double.toString(trackingInfoSlected.latitude) + "," +
+                Double.toString(trackingInfoSlected.longitude));
         tracking.setTargetStartTime(trackingInfoSlected.date);
-        tracking.setTargetEndTime(Helpers.caculateEndTime(trackingInfoSlected.date,trackingInfoSlected.stopTime));
+        tracking.setTargetEndTime(Helpers.caculateEndTime(trackingInfoSlected.date,
+                trackingInfoSlected.stopTime));
         tracking.setTrackableId(bundle.getInt(Constant.trackableId));
 
         TrackingManager trackingManager = TrackingManager.getSingletonInstance();
@@ -90,7 +95,8 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
         Date start = trackingInfoSlected.date;
         Date end = Helpers.caculateEndTime(start,trackingInfoSlected.stopTime);
 
-        if ( (slectedDate.after(start) && slectedDate.before(end)) || slectedDate.getTime() == start.getTime()||
+        if ( (slectedDate.after(start) && slectedDate.before(end)) ||
+                slectedDate.getTime() == start.getTime()||
                 slectedDate.getTime() == end.getTime())
         {
             return true;

@@ -22,7 +22,8 @@ public class AddOrEditTrackingListener implements View.OnClickListener {
 
 
 
-    public AddOrEditTrackingListener(AbstractTrackable foodTruck, AbstractTracking tracking, Context context){
+    public AddOrEditTrackingListener(AbstractTrackable foodTruck, AbstractTracking tracking,
+                                     Context context){
         this.foodTruck = foodTruck;
         this.tracking = tracking;
         this.context = context;
@@ -40,7 +41,8 @@ public class AddOrEditTrackingListener implements View.OnClickListener {
 
             intent.putExtra(Constant.operation, Constant.EditOperation);
             intent.putExtra(Constant.trackableId, tracking.getTrackableId());
-            intent.putExtra(Constant.trackableName, TrackacbleManager.getTrackable(tracking.getTrackableId()).getName());
+            intent.putExtra(Constant.trackableName,
+                    TrackacbleManager.getTrackable(tracking.getTrackableId()).getName());
             intent.putExtra(Constant.trackingTitle, tracking.getTitle());
             intent.putExtra(Constant.trackingId, tracking.getTrackingId());
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");

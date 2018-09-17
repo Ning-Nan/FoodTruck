@@ -10,7 +10,8 @@ import android.widget.TimePicker;
 /*
     Reusable Picker for both Date and Time.
  */
-public class OnDateTimeSelectListener implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class OnDateTimeSelectListener implements DatePickerDialog.OnDateSetListener,
+        TimePickerDialog.OnTimeSetListener{
 
     private EditText editText;
 

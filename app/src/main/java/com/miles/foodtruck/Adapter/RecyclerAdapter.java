@@ -23,13 +23,15 @@ import java.util.Observer;
     Depends on different parameter passed in, Make different decision.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Observer{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
+        implements Observer{
 
     private List<AbstractTrackable> mTrackables;
     private List<AbstractTracking> mTrackings;
     private Context mContext;
 
-    public RecyclerAdapter(List<AbstractTrackable> trucks, List<AbstractTracking> trackings,Context context){
+    public RecyclerAdapter(List<AbstractTrackable> trucks, List<AbstractTracking> trackings,
+                           Context context){
         mTrackables = trucks;
         mContext = context;
         mTrackings = trackings;
@@ -41,7 +43,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent,false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item,
+                parent,false);
         return new ViewHolder(item);
     }
 
@@ -93,7 +96,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         if (mTrackings == null) {
             viewHolder.mTextView.setText(mTrackables.get(i).getOutPutString());
             viewHolder.mButton.setText(R.string.add_button);
-            viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(mTrackables.get(i), null, mContext));
+            viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(mTrackables.get(i),
+                    null, mContext));
             viewHolder.view.setOnLongClickListener(new OnLongClickListener(Integer
                     .toString(mTrackables.get(i).getId()),null));
         }
@@ -101,8 +105,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         {
             viewHolder.mTextView.setText(mTrackings.get(i).getOutPutString());
             viewHolder.mButton.setText(R.string.edit_button);
-            viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(null,mTrackings.get(i),mContext));
-            viewHolder.view.setOnLongClickListener(new OnLongClickListener("",mTrackings.get(i)));
+            viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(null,
+                    mTrackings.get(i),mContext));
+            viewHolder.view.setOnLongClickListener(new OnLongClickListener(
+                    "",mTrackings.get(i)));
 
         }
 

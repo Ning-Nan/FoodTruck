@@ -15,7 +15,8 @@ public class TrackacbleManager {
     private static ArrayList<String> categories = new ArrayList<>();
 
     //Read from text
-    public static ArrayList<AbstractTrackable> readTrackableList(InputStream input) throws IOException {
+    public static ArrayList<AbstractTrackable> readTrackableList(InputStream input)
+            throws IOException {
 
         if (foodTrucks.size() == 0)
         {

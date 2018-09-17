@@ -24,7 +24,8 @@ public class Helpers {
             case Constant.DatePicker:
                 String[] output = str.split("/");
 
-                int[] dates = {Integer.parseInt(output[0]), Integer.parseInt(output[1]), Integer.parseInt(output[2])};
+                int[] dates = {Integer.parseInt(output[0]),
+                        Integer.parseInt(output[1]), Integer.parseInt(output[2])};
 
                 return dates;
 
@@ -68,7 +69,8 @@ public class Helpers {
 
         Date date = new Date();
 
-        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+                DateFormat.MEDIUM);
 
         try {
             date = dateFormat.parse(str);
@@ -114,14 +116,16 @@ public class Helpers {
     }
 
     //Get tracking info list for the selected trackable
-    public static List<TrackingService.TrackingInfo> getTrackingInfoForTrackable(String trackableId, Date date, Context context, boolean removeNonStops){
+    public static List<TrackingService.TrackingInfo> getTrackingInfoForTrackable(
+            String trackableId, Date date, Context context, boolean removeNonStops){
 
         TrackingService trackingService = TrackingService.getSingletonInstance(context);
 
         //One whole day (For A1)
         int searchWindow = 60 * 24;
 
-        List<TrackingService.TrackingInfo> matched = trackingService.getTrackingInfoForTimeRange(date,searchWindow,0);
+        List<TrackingService.TrackingInfo> matched =
+                trackingService.getTrackingInfoForTimeRange(date,searchWindow,0);
 
         Iterator<TrackingService.TrackingInfo> iter = matched.iterator();
 
@@ -129,7 +133,8 @@ public class Helpers {
             while (iter.hasNext()) {
                 TrackingService.TrackingInfo trackingInfo = iter.next();
 
-                if (!trackableId.equals(Integer.toString(trackingInfo.trackableId))|| trackingInfo.stopTime == 0)
+                if (!trackableId.equals(Integer.toString(trackingInfo.trackableId))
+                        || trackingInfo.stopTime == 0)
                     iter.remove();
             }
         }
@@ -147,11 +152,13 @@ public class Helpers {
     }
 
     //Generate spinner time slots for given tracking info list.
-    public static ArrayList<String> getSpinnerItem(List<TrackingService.TrackingInfo> trackingInfos){
+    public static ArrayList<String> getSpinnerItem
+    (List<TrackingService.TrackingInfo> trackingInfos){
 
         ArrayList<String> spinnerItems = new ArrayList<>();
 
-        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        DateFormat dateFormat = DateFormat.getDateTimeInstance
+                (DateFormat.SHORT, DateFormat.MEDIUM);
 
         for (int i = 0; i < trackingInfos.size(); i++) {
 

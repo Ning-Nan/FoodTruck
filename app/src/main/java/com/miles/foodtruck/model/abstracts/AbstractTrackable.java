@@ -12,7 +12,8 @@ public abstract class AbstractTrackable implements TrackableInterface{
 
 
 
-    public AbstractTrackable(int id, String name, String description, String url, String category)
+    public AbstractTrackable(int id, String name, String description,
+                             String url, String category)
     {
 
         this.id = id;

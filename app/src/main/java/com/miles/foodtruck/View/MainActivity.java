@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private void initTrackable(){
 
         try {
-            foodTrucks = TrackacbleManager.readTrackableList(getResources().openRawResource(R.raw.food_truck_data));
+            foodTrucks = TrackacbleManager.readTrackableList(
+                    getResources().openRawResource(R.raw.food_truck_data));
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -63,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.truck_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TrackacbleManager.getCategories());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item,
+                TrackacbleManager.getCategories());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

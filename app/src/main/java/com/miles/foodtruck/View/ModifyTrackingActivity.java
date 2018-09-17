@@ -58,10 +58,13 @@ public class ModifyTrackingActivity extends AppCompatActivity {
             timePicker.setText(intent.getStringExtra(Constant.timeText));
 
         }
-        datePicker.setOnClickListener(new PickerOnClickListener(datePicker, getSupportFragmentManager()));
-        timePicker.setOnClickListener(new PickerOnClickListener(timePicker, getSupportFragmentManager()));
+        datePicker.setOnClickListener
+                (new PickerOnClickListener(datePicker, getSupportFragmentManager()));
+        timePicker.setOnClickListener
+                (new PickerOnClickListener(timePicker, getSupportFragmentManager()));
 
-        SaveBtnOnClickListener saveBtnOnClickListener= new SaveBtnOnClickListener(intent.getExtras(),trackingTitle,
+        SaveBtnOnClickListener saveBtnOnClickListener=
+                new SaveBtnOnClickListener(intent.getExtras(),trackingTitle,
                 datePicker,timePicker,this);
         saveBtn.setOnClickListener(saveBtnOnClickListener);
         TextView location = (TextView) findViewById(R.id.location_text);
@@ -75,16 +78,23 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.time_slot_spinner);
 
-        List<TrackingService.TrackingInfo> availables = Helpers.getTrackingInfoForTrackable(Integer.toString(intent.getExtras().getInt(Constant.trackableId)),new Date(),this,true);
+        List<TrackingService.TrackingInfo> availables =
+                Helpers.getTrackingInfoForTrackable(
+                        Integer.toString(intent.getExtras().getInt(Constant.trackableId)),
+                        new Date(),
+                        this,true);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,Helpers.getSpinnerItem(availables));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
+                Helpers.getSpinnerItem(availables));
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
 
-        TimeSlotSpinner timeSlotSpinner = new TimeSlotSpinner(availables,saveBtnOnClickListener,location);
+        TimeSlotSpinner timeSlotSpinner =
+                new TimeSlotSpinner(availables,saveBtnOnClickListener,location);
         spinner.setOnItemSelectedListener(timeSlotSpinner);
 
         spinner.setSelection(timeSlotSpinner.initSelected(intent.getStringExtra(Constant.trackingId)));

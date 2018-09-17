@@ -49,7 +49,8 @@ public class TrackingService
       public String toString()
       {
          return String.format(Locale.getDefault(), "Date/Time=%s, trackableId=%d, stopTime=%d, lat=%.5f, long=%.5f", DateFormat.getDateTimeInstance(
-                 DateFormat.SHORT, DateFormat.MEDIUM).format(date), trackableId, stopTime, latitude, longitude);
+                 DateFormat.SHORT, DateFormat.MEDIUM).format(date),
+                 trackableId, stopTime, latitude, longitude);
       }
    }
 
@@ -89,7 +90,8 @@ public class TrackingService
          while (scanner.hasNext())
          {
             TrackingInfo trackingInfo = new TrackingInfo();
-            trackingInfo.date = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).parse(scanner.next());
+            trackingInfo.date = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+                    DateFormat.MEDIUM).parse(scanner.next());
             trackingInfo.trackableId = Integer.parseInt(scanner.next());
             trackingInfo.stopTime = Integer.parseInt(scanner.next());
             trackingInfo.latitude = Double.parseDouble(scanner.next());
@@ -121,7 +123,8 @@ public class TrackingService
    // PUBLIC METHODS
 
    // singleton
-   // thread safe lazy initialisation: see https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+   // thread safe lazy initialisation:
+   // see https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
    public static TrackingService getSingletonInstance(Context context)
    {
       TrackingService.context = context;
@@ -155,7 +158,8 @@ public class TrackingService
 
    // the main method you can call periodically to get data that matches a given date period
    // date +/- period minutes/seconds to check
-   public List<TrackingInfo> getTrackingInfoForTimeRange(Date date, int periodMinutes, int periodSeconds)
+   public List<TrackingInfo> getTrackingInfoForTimeRange(Date date,
+                                                         int periodMinutes, int periodSeconds)
    {
       // we reparse file contents for latest data on every call
       parseFile(context);

@@ -35,8 +35,11 @@ public class OnLongClickListener implements View.OnLongClickListener{
         //Case called from Trackables. Log route information.
         if (tracking == null){
             //For A1, using current date as searching date.
-            List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(trackableId,new Date(),v.getContext(),false);
-            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+            List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(
+                    trackableId,new Date(),
+                    v.getContext(),false);
+            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+                    DateFormat.MEDIUM);
             for (int i = 0; i < matched.size(); i++) {
                 logTrackingInfo(matched.get(i),dateFormat);
             }
@@ -53,7 +56,8 @@ public class OnLongClickListener implements View.OnLongClickListener{
 
 
     //Log single tracking info
-    private void logTrackingInfo(TrackingService.TrackingInfo trackingInfo, DateFormat dateFormat){
+    private void logTrackingInfo(TrackingService.TrackingInfo trackingInfo,
+                                 DateFormat dateFormat){
 
         String stopTime;
         if (trackingInfo.stopTime > 0)
@@ -65,7 +69,9 @@ public class OnLongClickListener implements View.OnLongClickListener{
 
         }
 
-        Log.i(LOG_TAG, String.format("Trackable ID: %d, Time: %s, Location: %.5f,%.5f, %s.", trackingInfo.trackableId,dateFormat.format(trackingInfo.date),trackingInfo.latitude,
+        Log.i(LOG_TAG, String.format("Trackable ID: %d, Time: %s, Location: %.5f,%.5f, %s.",
+                trackingInfo.trackableId,dateFormat.format(trackingInfo.date),
+                trackingInfo.latitude,
                 trackingInfo.longitude, stopTime));
 
     }

@@ -41,7 +41,8 @@ public class DateTimePickerFragment extends DialogFragment {
         if (!getArguments().getString(Constant.PickerText).equals(""))
         {
 
-            int[] dates = Helpers.extractDateTime(Constant.DatePicker,getArguments().getString(Constant.PickerText));
+            int[] dates = Helpers.extractDateTime(Constant.DatePicker,
+                    getArguments().getString(Constant.PickerText));
             day = dates[1];
 
             //Month index from 0
@@ -58,7 +59,8 @@ public class DateTimePickerFragment extends DialogFragment {
         }
         EditText editText = (EditText) getActivity().findViewById(R.id.date_picker);
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), new OnDateTimeSelectListener(editText), year, month, day);
+        return new DatePickerDialog(getActivity(),
+                new OnDateTimeSelectListener(editText), year, month, day);
 
     }
 
@@ -68,7 +70,8 @@ public class DateTimePickerFragment extends DialogFragment {
 
         if (!getArguments().getString(Constant.PickerText).equals(""))
         {
-            int[] time = Helpers.extractDateTime(Constant.TimePicker,getArguments().getString(Constant.PickerText));
+            int[] time = Helpers.extractDateTime(
+                    Constant.TimePicker,getArguments().getString(Constant.PickerText));
             hour = time[0];
             minute = time[1];
         }
@@ -81,7 +84,8 @@ public class DateTimePickerFragment extends DialogFragment {
         }
         EditText editText = (EditText) getActivity().findViewById(R.id.time_picker);
         // Create a new instance of DatePickerDialog and return it
-        return new TimePickerDialog(getActivity(), new OnDateTimeSelectListener(editText), hour, minute,true);
+        return new TimePickerDialog(getActivity(),
+                new OnDateTimeSelectListener(editText), hour, minute,true);
 
     }
 

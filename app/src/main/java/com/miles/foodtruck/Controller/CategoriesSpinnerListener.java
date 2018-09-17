@@ -13,7 +13,8 @@ public class CategoriesSpinnerListener implements AdapterView.OnItemSelectedList
     private ArrayList<AbstractTrackable> foodTrucks;
     private RecyclerAdapter mAdapter;
 
-    public CategoriesSpinnerListener(ArrayList<AbstractTrackable> foodTrucks, RecyclerAdapter mAdapter) {
+    public CategoriesSpinnerListener(ArrayList<AbstractTrackable> foodTrucks,
+                                     RecyclerAdapter mAdapter) {
 
         this.foodTrucks = foodTrucks;
         this.mAdapter = mAdapter;
