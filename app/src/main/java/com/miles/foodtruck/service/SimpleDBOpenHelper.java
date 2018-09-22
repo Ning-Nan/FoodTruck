@@ -19,28 +19,28 @@ class SimpleDBOpenHelper extends SQLiteOpenHelper
     static final String TABLE_TRACKABLE = "tbl_trackable";
     static final String TABLE_TRACKING = "tbl_tracking";
 
-    // SQL CREATE AND DROP TABLE STATEMENTS
+    // SQL CREATE STATEMENTS
     private static final String CREATE_TRACKABLE_TABLE = String.format("CREATE TABLE %s (" +
-            "    id          INTEGER    PRIMARY KEY" +
-            "                       UNIQUE" +
-            "                       NOT NULL," +
-            "    name        STRING," +
-            "    description STRING," +
-            "    url         STRING," +
-            "    category    STRING" +
+            " id INTEGER PRIMARY KEY" +
+            " UNIQUE" +
+            " NOT NULL," +
+            " name STRING," +
+            " description STRING," +
+            " url STRING," +
+            " category STRING" +
             ");", TABLE_TRACKABLE);
 
     private static final String CREATE_TRACKING_TABLE = String.format("CREATE TABLE tbl_tracking (" +
-            "    id              STRING   PRIMARY KEY" +
-            "                             UNIQUE" +
-            "                             NOT NULL," +
-            "    trackableId     INTEGER," +
-            "    title           STRING," +
-            "    targetStartTime DATETIME," +
-            "    targetEndTime   DATETIME," +
-            "    meetTime        DATETIME," +
-            "    currLocation    STRING," +
-            "    meetLocation    STRING" +
+            " id STRING PRIMARY KEY" +
+            " UNIQUE" +
+            " NOT NULL," +
+            " trackableId INTEGER," +
+            " title STRING," +
+            " targetStartTime INTEGER," +
+            " targetEndTime INTEGER," +
+            " meetTime INTEGER," +
+            " currLocation STRING," +
+            " meetLocation STRING" +
             ");", TABLE_TRACKING);
 
 
@@ -50,7 +50,7 @@ class SimpleDBOpenHelper extends SQLiteOpenHelper
     {
         if (singletonInstance == null)
             singletonInstance = new SimpleDBOpenHelper(
-                    context.getApplicationContext());
+                    context);
 
         return singletonInstance;
     }
@@ -83,7 +83,16 @@ class SimpleDBOpenHelper extends SQLiteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //Not Implemented
+
+        if (oldVersion != newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRACKABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRACKING);
+            onCreate(db);
+        }
+    }
+
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
     }
 
 }

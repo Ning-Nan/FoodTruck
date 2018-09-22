@@ -15,6 +15,8 @@ import com.miles.foodtruck.controller.CategoriesSpinnerListener;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
+import com.miles.foodtruck.service.tasks.DbinitTask;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,13 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         setTitle(R.string.trackable_list_title);
-        initTrackable();
-        initRecyclerView();
-        initSpinner();
+
+        //Async task to perform database init and load models.
+        DbinitTask dbinitTask = new DbinitTask(this);
+        dbinitTask.execute();
+
 
     }
 
-    private void initRecyclerView(){
+    public void initRecyclerView(){
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(this);
@@ -49,18 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initTrackable(){
+    public void initTrackable(){
 
-        try {
-            foodTrucks = TrackacbleManager.readTrackableList(
-                    getResources().openRawResource(R.raw.food_truck_data));
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
+        this.foodTrucks = TrackacbleManager.getTrackableList();
     }
 
-    private void initSpinner(){
+
+    public void initSpinner(){
 
         Spinner spinner = (Spinner) findViewById(R.id.truck_spinner);
 
