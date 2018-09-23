@@ -37,6 +37,15 @@ public class TrackingListActivity extends AppCompatActivity {
 
 
     @Override
+    protected void onResume() {
+        //To update the current location in that view.
+        //Since the adapter is already binded.
+        //The data change needs to be passed again to the adapter.
+        //Maybe use update? notify dataset changed?
+        super.onResume();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return OnMenuItemSelect.onOptionsItemSelected(item,this);

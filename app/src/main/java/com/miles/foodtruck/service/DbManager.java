@@ -33,6 +33,7 @@ public class DbManager {
     //Singleton, call init when first time created instance.
     public static DbManager getSingletonInstance(Context context)
     {
+
         if (singletonInstance == null){
             singletonInstance = new DbManager(context.getApplicationContext());
             singletonInstance.init();
@@ -80,6 +81,7 @@ public class DbManager {
             }catch (SQLiteConstraintException e){
                 //Do nothing as this means this id already exits.
             }
+            values.clear();
         }
 
 
@@ -124,7 +126,7 @@ public class DbManager {
                 TrackingManager.getSingletonInstance().addToTracking(tracking);
 
 
-                //移动到下一位
+                //Move next
                 cursor.moveToNext();
             }
         }
@@ -135,11 +137,25 @@ public class DbManager {
 
     }
 
-    public void saveOnChanged(){
+    //Save trackings when modified or added.
+    public void saveOnChanged(AbstractTracking tracking){
 
+        ContentValues values = new ContentValues();
+        values.put("id",tracking.getTrackingId());
+        values.put("trackableId",tracking.getTrackableId());
+        values.put("title",tracking.getTitle());
+        //Save time as timestamp
+        values.put("targetStartTime",tracking.getTargetStartTime().getTime());
+        values.put("targetEndTime",tracking.getTargetEndTime().getTime());
+        values.put("meetTime",tracking.getMeetTime().getTime());
+        values.put("currLocation",tracking.getCurrLocation());
+        values.put("meetLocation",tracking.getMeetLocation());
 
+        //Insert if not exist.
+        //Update if exist.
+        db.insertWithOnConflict(SimpleDBOpenHelper.TABLE_TRACKING,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+        values.clear();
         db.close();
-
     }
 
 }

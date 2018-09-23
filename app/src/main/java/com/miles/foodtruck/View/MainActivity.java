@@ -15,9 +15,7 @@ import com.miles.foodtruck.controller.CategoriesSpinnerListener;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
-import com.miles.foodtruck.service.tasks.DbinitTask;
-
-import java.io.IOException;
+import com.miles.foodtruck.service.Workers.DbinitAsyncTask;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.trackable_list_title);
 
         //Async task to perform database init and load models.
-        DbinitTask dbinitTask = new DbinitTask(this);
-        dbinitTask.execute();
+        DbinitAsyncTask dbinitAsyncTask = new DbinitAsyncTask(this);
+        dbinitAsyncTask.execute();
 
 
     }

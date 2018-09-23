@@ -1,15 +1,15 @@
-package com.miles.foodtruck.service.tasks;
+package com.miles.foodtruck.service.Workers;
 
 import android.os.AsyncTask;
 
 import com.miles.foodtruck.service.DbManager;
 import com.miles.foodtruck.view.MainActivity;
 
-public class DbinitTask extends AsyncTask<Void, Integer, Void>{
+public class DbinitAsyncTask extends AsyncTask<Void, Integer, Void>{
 
     private MainActivity activity;
 
-    public DbinitTask (MainActivity activity){
+    public DbinitAsyncTask(MainActivity activity){
 
         this.activity = activity;
     }
@@ -17,7 +17,7 @@ public class DbinitTask extends AsyncTask<Void, Integer, Void>{
     @Override
     protected Void doInBackground(Void... voids) {
 
-        DbManager dbManager = DbManager.getSingletonInstance(activity.getApplicationContext());
+        DbManager.getSingletonInstance(activity.getApplicationContext());
 
         return null;
     }
