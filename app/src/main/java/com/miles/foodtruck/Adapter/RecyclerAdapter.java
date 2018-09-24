@@ -117,12 +117,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     /*
     Help to update the list.
     Trackables are updated from spinner, so it is public method.
-    Trackings are updated using Observer, and then call this private method in this class.
+    Trackings are updated using Observer, and then call this method in this class.
      */
     public void updateTrackables(ArrayList<AbstractTrackable> foodTrucks){
         this.mTrackables = foodTrucks;
     }
-    private void updateTrackings(ArrayList<AbstractTracking> trackings){
+    public void updateTrackings(ArrayList<AbstractTracking> trackings){
         this.mTrackings = trackings;
 
     }

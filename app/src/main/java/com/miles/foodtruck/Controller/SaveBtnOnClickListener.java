@@ -9,7 +9,6 @@ import com.miles.foodtruck.model.Tracking;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.service.Workers.SaveToDbThread;
-import com.miles.foodtruck.service.Workers.WorkerThreads;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 import java.util.Date;
@@ -85,8 +84,6 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
 
         }
 
-        //for test purpose
-        tracking.setCurrLocation("");
 
         trackingManager.addToTracking(tracking);
 

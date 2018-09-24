@@ -6,6 +6,8 @@ import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.model.Tracking;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.service.Workers.RemoveFromDbThread;
+import com.miles.foodtruck.service.Workers.SaveToDbThread;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 import java.text.DateFormat;
@@ -47,8 +49,12 @@ public class OnLongClickListener implements View.OnLongClickListener{
         }
         else
         {   //Case called from Tracking List. Remove item.
+            //Also remove from database, use another thread.
             TrackingManager.getSingletonInstance().remove((Tracking) tracking);
-            Helpers.callToast(Constant.RemovedMessage, v.getContext());
+            RemoveFromDbThread thread = new RemoveFromDbThread(tracking,v.getContext());
+            thread.start();
+
+
         }
 
         return true;

@@ -19,9 +19,17 @@ public class OnMenuItemSelect {
                 activity.startActivity(intent);
                 return true;
 
-                //Back to last activity
+            //Back to last activity
             case android.R.id.home:
                 activity.finish();
+                return true;
+
+
+            case R.id.suggest_now:
+                //TO DO
+                //1. MAKE THE SUGGETIONS
+                //2. CALL ALERT TO DISPLAY THESE THINGS
+
                 return true;
 
         }

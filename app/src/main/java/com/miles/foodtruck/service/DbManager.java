@@ -123,7 +123,7 @@ public class DbManager {
                 tracking.setMeetTime(meetTime);
                 tracking.setCurrLocation(currLocation);
                 tracking.setMeetLocation(meetLocation);
-                TrackingManager.getSingletonInstance().addToTracking(tracking);
+                TrackingManager.getSingletonInstance().addWithNoConflic(tracking);
 
 
                 //Move next
@@ -138,7 +138,7 @@ public class DbManager {
     }
 
     //Save trackings when modified or added.
-    public void saveOnChanged(AbstractTracking tracking){
+    public void saveOnAdded(AbstractTracking tracking){
 
         ContentValues values = new ContentValues();
         values.put("id",tracking.getTrackingId());
@@ -156,6 +156,15 @@ public class DbManager {
         db.insertWithOnConflict(SimpleDBOpenHelper.TABLE_TRACKING,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         values.clear();
         db.close();
+    }
+
+    //Save trackings when removed.
+    public void saveOnRemoved(AbstractTracking tracking){
+
+        db.delete(SimpleDBOpenHelper.TABLE_TRACKING,"id="+ "'" + tracking.getTrackingId()+
+                "'",null);
+        db.close();
+
     }
 
 }

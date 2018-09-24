@@ -86,6 +86,7 @@ public abstract class AbstractTracking implements TrackingInterface{
 
         return "Title: " + getTitle() + "\n"
                 + "Meet Time: " + getMeetTime() + "\n"
-                + "Meet Location: " + getMeetLocation();
+                + "Meet Location: " + getMeetLocation() + "\n"
+                + "Current Location: " + getCurrLocation();
     }
 }

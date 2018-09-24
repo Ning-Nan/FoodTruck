@@ -62,6 +62,27 @@ public class TrackingManager extends Observable{
 
     }
 
+    //No worries about ID check
+    public void addWithNoConflic(AbstractTracking tracking){
+
+        //Sort by date
+        int position = -1;
+        for (int i = 0; i < trackings.size(); i++) {
+            if (tracking.getMeetTime().before(trackings.get(i).getMeetTime())) {
+
+                position = i;
+                break;
+            }
+        }
+        if (position !=-1){
+            trackings.add(position, tracking);
+        }
+        else {
+            trackings.add(tracking);
+
+        }
+    }
+
     public ArrayList<AbstractTracking> getAll(){
 
         return trackings;

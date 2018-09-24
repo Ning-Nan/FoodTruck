@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -97,12 +98,21 @@ public class Helpers {
     //get random string
     public static String random(int length, TrackingManager trackingManager) {
 
-        StringBuilder builder = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            builder.append((char) (ThreadLocalRandom.current().nextInt(33, 128)));
+        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        Random random=new Random();
+
+        StringBuffer sb=new StringBuffer();
+
+        for(int i=0;i<length;i++){
+
+            int number=random.nextInt(62);
+
+            sb.append(str.charAt(number));
         }
 
-        String generated =  builder.toString();
+        String generated =  sb.toString();
+
 
         for (int i = 0; i < trackingManager.getAll().size(); i++) {
 

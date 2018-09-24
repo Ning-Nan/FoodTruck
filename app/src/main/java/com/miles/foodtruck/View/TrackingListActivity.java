@@ -11,6 +11,7 @@ import com.miles.foodtruck.controller.OnMenuItemSelect;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.R;
+import com.miles.foodtruck.service.Workers.UpdateLocationThread;
 
 import java.util.ArrayList;
 
@@ -38,10 +39,9 @@ public class TrackingListActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //To update the current location in that view.
-        //Since the adapter is already binded.
-        //The data change needs to be passed again to the adapter.
-        //Maybe use update? notify dataset changed?
+        //update all tracking's current location in another thread.
+        UpdateLocationThread thread = new UpdateLocationThread(this);
+        thread.start();
         super.onResume();
     }
 
@@ -73,6 +73,13 @@ public class TrackingListActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
     }
+
+    public RecyclerAdapter getAdapter(){
+
+        return mAdapter;
+    }
+
+
 
 
 }
