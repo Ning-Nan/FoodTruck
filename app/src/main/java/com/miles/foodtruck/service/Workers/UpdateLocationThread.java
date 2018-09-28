@@ -1,6 +1,5 @@
 package com.miles.foodtruck.service.Workers;
 
-import android.util.Log;
 
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
@@ -8,7 +7,6 @@ import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.util.Helpers;
 import com.miles.foodtruck.view.TrackingListActivity;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

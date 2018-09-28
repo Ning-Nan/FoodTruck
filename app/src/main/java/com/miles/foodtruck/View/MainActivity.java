@@ -15,7 +15,10 @@ import com.miles.foodtruck.controller.CategoriesSpinnerListener;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
+import com.miles.foodtruck.service.LocationService;
 import com.miles.foodtruck.service.Workers.DbinitAsyncTask;
+import com.miles.foodtruck.service.Workers.SuggestThread;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         DbinitAsyncTask dbinitAsyncTask = new DbinitAsyncTask(this);
         dbinitAsyncTask.execute();
 
+        //Start to track device location.
+        LocationService locationService = new LocationService(this);
+        locationService.initLocation(getApplicationContext());
+
+        
 
     }
 
