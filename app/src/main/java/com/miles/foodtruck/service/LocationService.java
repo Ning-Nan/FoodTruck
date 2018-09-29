@@ -16,7 +16,7 @@ public class LocationService implements LocationListener {
     private LocationManager locationManager;
     private static final int LOCATION_PERMISSION_REQUEST = 1;
     private AppCompatActivity activity;
-    private static Location currLocation;
+    private static Location currLocation = null;
 
 
     public LocationService(AppCompatActivity activity) {
@@ -36,6 +36,7 @@ public class LocationService implements LocationListener {
             ActivityCompat.requestPermissions(activity, new String[]
                             {Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION_REQUEST);
+
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
@@ -43,12 +44,23 @@ public class LocationService implements LocationListener {
         locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
                 2000, 0, this );
 
+        //send last known.
+        if (currLocation == null)
+        {
+            currLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (currLocation == null)
+            {
+                currLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            }
+        }
+
 
 
 
     }
 
-    private static Location getCurrLocation(){
+    public static Location getCurrLocation(){
         return currLocation;
     }
 
@@ -57,9 +69,8 @@ public class LocationService implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
+        Log.w("location:", location.toString());
         currLocation = location;
-        Log.w("Location: ",location.toString());
-
     }
 
     @Override

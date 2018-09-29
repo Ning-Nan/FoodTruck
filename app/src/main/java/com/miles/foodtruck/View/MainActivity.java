@@ -1,5 +1,7 @@
 package com.miles.foodtruck.view;
 
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +19,7 @@ import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
 import com.miles.foodtruck.service.LocationService;
 import com.miles.foodtruck.service.Workers.DbinitAsyncTask;
-import com.miles.foodtruck.service.Workers.SuggestThread;
+import com.miles.foodtruck.service.Workers.SuggestionAsyncTask;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
+    private LocationService locationService;
 
 
     @Override
@@ -42,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
         dbinitAsyncTask.execute();
 
         //Start to track device location.
-        LocationService locationService = new LocationService(this);
+        locationService = new LocationService(this);
         locationService.initLocation(getApplicationContext());
 
-        
+        //Start the suggestion
+        SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
+        suggestionAsyncTask.execute();
+
+
 
     }
 
@@ -92,5 +99,25 @@ public class MainActivity extends AppCompatActivity {
 
         return OnMenuItemSelect.onOptionsItemSelected(item,this);
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    locationService.initLocation(getApplicationContext());
+                    //Start the suggestion
+                    SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
+                    suggestionAsyncTask.execute();
+
+
+                }
+            }
+        }
     }
 }
