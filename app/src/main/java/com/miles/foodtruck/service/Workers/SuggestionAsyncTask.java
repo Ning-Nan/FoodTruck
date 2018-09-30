@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.miles.foodtruck.controller.SuggestionNotification;
 import com.miles.foodtruck.model.TrackacbleManager;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.service.LocationService;
@@ -50,7 +51,8 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
     protected Void doInBackground(Void... voids) {
 
         if (LocationService.getCurrLocation()== null)
-        {
+        {        Log.w("Job","Has tracking infadasdao");
+
             this.cancel(true);
         }
 
@@ -59,7 +61,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                 TrackacbleManager.getTrackableList();
 
         //trackable info used to store the distance information for this trackable.
-        ArrayList<TrackableInfo> trackableInfos = new ArrayList<>();
+        trackableInfos = new ArrayList<>();
 
         if (trackables.size() != 0) {
 
@@ -76,7 +78,6 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                 //for each tracking info, determine whether it can be arrived before it leaves.
                 if (trackingInfos.size() != 0) {
 
-                    Log.w("Job","Has tracking info");
 
                     for (TrackingService.TrackingInfo trackingInfo : trackingInfos) {
 
@@ -84,7 +85,8 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                         TrackableInfo trackableInfo = getTrackableInfo(trackingInfo);
 
                         if (trackableInfo == null)
-                        {
+                        {                    Log.w("Job","Hasasd tracking info");
+
 
                             continue;
                         }
@@ -97,6 +99,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                                 trackableInfo.meetTime.getTime() == trackableInfo.targetEndTime.getTime()||
                                 trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                         {
+                            Log.w("Job","Has21312 tracking info");
 
                             trackableInfo.title = trackable.getName();
                             if(trackableInfo.meetTime.before(trackableInfo.targetStartTime))
@@ -141,10 +144,29 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
             Log.w("Test", trackableInfo.toString());
             
         }
+        Log.w("Job",Integer.toString(trackableInfos.size()));
+
+
 
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+
+        Log.w("Job",Integer.toString(trackableInfos.size()));
+        if (trackableInfos.size()!=0)
+        {
+
+            SuggestionNotification suggestionNotification =
+                    new SuggestionNotification(activity.getApplicationContext(), trackableInfos);
+
+            suggestionNotification.show();
+        }
+
+
+
+    }
 
     public TrackableInfo getTrackableInfo(TrackingService.TrackingInfo trackingInfo)  {
 

@@ -1,5 +1,6 @@
 package com.miles.foodtruck.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ public class OnMenuItemSelect {
                 //TO DO
                 //1. MAKE THE SUGGETIONS
                 //2. CALL ALERT TO DISPLAY THESE THINGS
+
+                //Test Notification
 
                 return true;
 
