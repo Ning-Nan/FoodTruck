@@ -1,8 +1,7 @@
-package com.miles.foodtruck.service.Workers;
+package com.miles.foodtruck.service.workers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.service.DbManager;

@@ -1,4 +1,4 @@
-package com.miles.foodtruck.service.Workers;
+package com.miles.foodtruck.service.workers;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +11,12 @@ import com.miles.foodtruck.service.LocationService;
 import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.util.Helpers;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,7 +49,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
     protected Void doInBackground(Void... voids) {
 
         if (LocationService.getCurrLocation()== null)
-        {        Log.w("Job","Has tracking infadasdao");
+        {
 
             this.cancel(true);
         }
@@ -85,8 +83,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                         TrackableInfo trackableInfo = getTrackableInfo(trackingInfo);
 
                         if (trackableInfo == null)
-                        {                    Log.w("Job","Hasasd tracking info");
-
+                        {
 
                             continue;
                         }
@@ -99,8 +96,6 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                                 trackableInfo.meetTime.getTime() == trackableInfo.targetEndTime.getTime()||
                                 trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                         {
-                            Log.w("Job","Has21312 tracking info");
-
                             trackableInfo.title = trackable.getName();
                             if(trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                             {
@@ -144,7 +139,6 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
             Log.w("Test", trackableInfo.toString());
             
         }
-        Log.w("Job",Integer.toString(trackableInfos.size()));
 
 
 
@@ -154,7 +148,6 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
 
-        Log.w("Job",Integer.toString(trackableInfos.size()));
         if (trackableInfos.size()!=0)
         {
 

@@ -8,7 +8,7 @@ import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.model.Tracking;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.service.TrackingService;
-import com.miles.foodtruck.service.Workers.SaveToDbThread;
+import com.miles.foodtruck.service.workers.SaveToDbThread;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 import java.util.Date;

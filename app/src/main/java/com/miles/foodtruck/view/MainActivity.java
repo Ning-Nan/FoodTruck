@@ -1,5 +1,9 @@
 package com.miles.foodtruck.view;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +22,9 @@ import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
 import com.miles.foodtruck.service.LocationService;
-import com.miles.foodtruck.service.Workers.DbinitAsyncTask;
-import com.miles.foodtruck.service.Workers.SuggestionAsyncTask;
+import com.miles.foodtruck.service.SuggestionAlarmService;
+import com.miles.foodtruck.service.workers.DbinitAsyncTask;
+import com.miles.foodtruck.service.workers.SuggestionAsyncTask;
 
 import java.util.ArrayList;
 
@@ -49,10 +54,21 @@ public class MainActivity extends AppCompatActivity {
         locationService.initLocation(getApplicationContext());
 
         //Start the suggestion
-        SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
-        suggestionAsyncTask.execute();
+//        SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
+//        suggestionAsyncTask.execute();
+        initAlarmService();
+    }
 
+    private void initAlarmService()
+    {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
+        Intent intent = new Intent(this, SuggestionAlarmService.class);
+        intent.setAction(SuggestionAlarmService.ACTION_ALARM);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 3,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
 
     }
 

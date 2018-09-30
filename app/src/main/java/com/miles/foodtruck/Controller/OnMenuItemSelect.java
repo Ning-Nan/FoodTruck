@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.miles.foodtruck.R;
+
+import com.miles.foodtruck.service.workers.SuggestionAsyncTask;
 import com.miles.foodtruck.view.TrackingListActivity;
 
 /*
@@ -27,11 +29,8 @@ public class OnMenuItemSelect {
 
 
             case R.id.suggest_now:
-                //TO DO
-                //1. MAKE THE SUGGETIONS
-                //2. CALL ALERT TO DISPLAY THESE THINGS
-
-                //Test Notification
+                SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(activity);
+                suggestionAsyncTask.execute();
 
                 return true;
 

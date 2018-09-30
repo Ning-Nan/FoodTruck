@@ -11,7 +11,7 @@ import com.miles.foodtruck.controller.OnMenuItemSelect;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.R;
-import com.miles.foodtruck.service.Workers.UpdateLocationThread;
+import com.miles.foodtruck.service.workers.UpdateLocationThread;
 
 import java.util.ArrayList;
 
