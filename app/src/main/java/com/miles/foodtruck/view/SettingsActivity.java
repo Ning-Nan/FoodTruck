@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         EditText suggestionFrequency = (EditText) findViewById(R.id.suggestion_setting);
 
         suggestionFrequency.setText(
-                Integer.toString(settings.getInt("SuggestionFrequency",1)));
+                Integer.toString(settings.getInt("SuggestionFrequency",60)));
 
         Button saveBtn = (Button) findViewById(R.id.setting_btn);
 

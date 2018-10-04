@@ -1,5 +1,6 @@
 package com.miles.foodtruck.service.workers;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
@@ -11,11 +12,13 @@ public class SaveToDbThread extends Thread{
 
     private AbstractTracking tracking;
     private AppCompatActivity activity;
+    private Context context;
 
-    public SaveToDbThread(AbstractTracking tracking, AppCompatActivity activity){
+    public SaveToDbThread(AbstractTracking tracking, AppCompatActivity activity, Context context){
 
         this.tracking = tracking;
         this.activity = activity;
+        this.context = context;
 
     }
     @Override

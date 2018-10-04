@@ -8,10 +8,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.util.LogWriter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,11 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 3,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         SharedPreferences settings = getSharedPreferences("setting", MODE_PRIVATE);
-        int millis = settings.getInt("SuggestionFrequency",1) * 60 * 1000;
+        int millis = settings.getInt("SuggestionFrequency",60)  * 1000;
 
 
-        am.setRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + millis , millis,pendingIntent);
+        am.setExact(AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + millis ,pendingIntent);
+
 
     }
 
@@ -147,11 +150,6 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     locationService.initLocation(getApplicationContext());
-                    //Start the suggestion
-                    SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(getApplicationContext());
-                    suggestionAsyncTask.execute();
-
-
                 }
             }
         }

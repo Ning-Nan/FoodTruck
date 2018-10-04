@@ -34,10 +34,19 @@ public class SuggestionNotification {
         //get First
         SuggestionAsyncTask.TrackableInfo trackableInfo = trackableInfos.get(index);
 
+        ActionReceiver.trackableInfo = trackableInfo;
+
         //Display String
         String str =String.format("Trackable Name: %s\nWalk Time: %d minute(s)\nDistance: %fkm\nMeet Time: %s",
                 trackableInfo.title,trackableInfo.duration/60,(double)trackableInfo.distance/1000,
                 trackableInfo.meetTime.toString()) ;
+
+
+        Intent addIntent = new Intent(context,ActionReceiver.class);
+        addIntent.putExtra("Action","Add");
+        PendingIntent pendingAddIntent = PendingIntent.getBroadcast(context,3,addIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
 
         Intent nextIntent = new Intent(context,ActionReceiver.class);
         nextIntent.putExtra("Action","Next");
@@ -57,6 +66,7 @@ public class SuggestionNotification {
                 .setContentText(trackableInfo.title)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(str))
+                .addAction(R.drawable.ic_launcher_background,"Add",pendingAddIntent)
                 .addAction(R.drawable.ic_launcher_background,"Next",pendingNextIntent)
                 .addAction(R.drawable.ic_launcher_background,"Dismiss",pendingDismissIntent)
 

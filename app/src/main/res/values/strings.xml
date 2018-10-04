@@ -19,7 +19,7 @@
 
     <string name="location_label">Location: </string>
 
-    <string name="suggestion_setting_label">Suggestion Frequency(mins): </string>
+    <string name="suggestion_setting_label">Suggestion Frequency(sec): </string>
     <string name="title_activity_maps">Map</string>
 
 </resources>

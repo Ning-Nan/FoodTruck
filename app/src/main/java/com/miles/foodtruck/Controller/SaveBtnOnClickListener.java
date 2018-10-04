@@ -91,6 +91,8 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
         SaveToDbThread thread = new SaveToDbThread(tracking,activity);
         thread.start();
 
+
+
     }
 
 
