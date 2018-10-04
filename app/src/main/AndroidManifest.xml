@@ -5,6 +5,7 @@
     tools:node="replace"
     >
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +27,8 @@
         <activity android:name=".view.TrackingListActivity" />
         <activity android:name=".view.ModifyTrackingActivity" />
 
-        <receiver android:name=".service.ActionReceiver" />
+        <receiver android:name=".service.ActionReceiver">
+        </receiver>
 
         <activity android:name=".view.SettingsActivity" />
         <!--

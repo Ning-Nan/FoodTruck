@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<AbstractTrackable> foodTrucks = new ArrayList<>();
     private LocationService locationService;
+    private ActionReceiver actionReceiver;
 
 
     @Override
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         setTitle(R.string.trackable_list_title);
+
+        initReceiver();
 
         //Async task to perform database init and load models.
         DbinitAsyncTask dbinitAsyncTask = new DbinitAsyncTask(this);
@@ -57,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         //Start the suggestion
 //        SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
 //        suggestionAsyncTask.execute();
-        initAlarmService();
+        //initAlarmService();
+
     }
 
     private void initAlarmService()
@@ -109,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new CategoriesSpinnerListener(foodTrucks,mAdapter));
     }
 
+    private void initReceiver(){
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+
+        actionReceiver = new ActionReceiver();
+
+        registerReceiver(actionReceiver,filter);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -141,5 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(actionReceiver);
     }
 }
