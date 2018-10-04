@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +20,12 @@ import com.miles.foodtruck.adapter.RecyclerAdapter;
 import com.miles.foodtruck.controller.OnMenuItemSelect;
 import com.miles.foodtruck.controller.CategoriesSpinnerListener;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
-import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
+import com.miles.foodtruck.service.ActionReceiver;
 import com.miles.foodtruck.service.LocationService;
-import com.miles.foodtruck.service.SuggestionAlarmService;
-import com.miles.foodtruck.service.workers.DbinitAsyncTask;
-import com.miles.foodtruck.service.workers.SuggestionAsyncTask;
+import com.miles.foodtruck.service.workers.*;
+import com.miles.foodtruck.R;
+
 
 import java.util.ArrayList;
 
@@ -63,12 +64,17 @@ public class MainActivity extends AppCompatActivity {
     {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent intent = new Intent(this, SuggestionAlarmService.class);
-        intent.setAction(SuggestionAlarmService.ACTION_ALARM);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 3,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(getApplicationContext(), ActionReceiver.class);
+        intent.putExtra("Action","Alarm");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+                3,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
+        SharedPreferences settings = getSharedPreferences("setting", MODE_PRIVATE);
+        int millis = settings.getInt("SuggestionFrequency",1) * 60 * 1000;
+
+
+        am.setRepeating(AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + millis , millis,pendingIntent);
 
     }
 
@@ -128,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
                     locationService.initLocation(getApplicationContext());
                     //Start the suggestion
-                    SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
+                    SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(getApplicationContext());
                     suggestionAsyncTask.execute();
 
 

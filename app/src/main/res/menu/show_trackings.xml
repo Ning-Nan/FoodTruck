@@ -6,4 +6,7 @@
     <item android:id="@+id/suggest_now"
         android:title="@string/suggest_now_menu_item"
         />
+    <item android:id="@+id/settings"
+        android:title="@string/setting_menu_item"
+        />
 </menu>

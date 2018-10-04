@@ -1,5 +1,6 @@
 package com.miles.foodtruck.service.workers;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
     private final String LOG_TAG = SuggestionAsyncTask.class.getName();
-    private AppCompatActivity activity;
+    private Context context;
 
     private String Key = "AIzaSyAoEf3AN9-pi33RQn_LYBkk1d9LbRDxydM";
 
@@ -36,9 +37,9 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
 
 
-    public SuggestionAsyncTask(AppCompatActivity activity){
+    public SuggestionAsyncTask(Context context){
 
-        this.activity = activity;
+        this.context = context;
 
     }
 
@@ -70,7 +71,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                 //Filter the tracking info, remove non-stops
                 List<TrackingService.TrackingInfo> trackingInfos =
                         Helpers.getTrackingInfoForTrackable(Integer.toString(trackable.getId()),
-                                new Date(), activity.getApplicationContext(), true);
+                                new Date(), context, true);
 
 
                 //for each tracking info, determine whether it can be arrived before it leaves.
@@ -152,7 +153,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
         {
 
             SuggestionNotification suggestionNotification =
-                    new SuggestionNotification(activity.getApplicationContext(), trackableInfos);
+                    new SuggestionNotification(context, trackableInfos);
 
             suggestionNotification.show();
         }

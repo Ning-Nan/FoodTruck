@@ -7,6 +7,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.miles.foodtruck.controller.SuggestionNotification;
+import com.miles.foodtruck.service.workers.SuggestionAsyncTask;
 
 public class ActionReceiver extends BroadcastReceiver
 {
@@ -22,8 +23,12 @@ public class ActionReceiver extends BroadcastReceiver
         }
         else if (action.equals("Dismiss")){
 
-            Log.w("sad","sdasdd");
             dismissNotification(context);
+        }
+        else if (action.equals("Alarm"))
+        {
+            SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(context);
+            suggestionAsyncTask.execute();
         }
 
     }

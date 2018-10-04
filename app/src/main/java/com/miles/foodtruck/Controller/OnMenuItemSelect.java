@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.miles.foodtruck.R;
 
-import com.miles.foodtruck.service.workers.SuggestionAsyncTask;
+import com.miles.foodtruck.service.workers.*;
+import com.miles.foodtruck.view.SettingsActivity;
 import com.miles.foodtruck.view.TrackingListActivity;
 
 /*
@@ -29,9 +30,15 @@ public class OnMenuItemSelect {
 
 
             case R.id.suggest_now:
-                SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(activity);
+                SuggestionAsyncTask suggestionAsyncTask =
+                        new SuggestionAsyncTask(activity.getApplicationContext());
                 suggestionAsyncTask.execute();
 
+                return true;
+
+            case R.id.settings:
+                Intent intent1 = new Intent(activity, SettingsActivity.class);
+                activity.startActivity(intent1);
                 return true;
 
         }

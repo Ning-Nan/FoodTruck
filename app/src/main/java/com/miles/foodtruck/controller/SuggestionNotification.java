@@ -35,8 +35,8 @@ public class SuggestionNotification {
         SuggestionAsyncTask.TrackableInfo trackableInfo = trackableInfos.get(index);
 
         //Display String
-        String str =String.format("Trackable Name: %s\nWalk Time: %d\nDistance: %d\nMeet Time: %s",
-                trackableInfo.title,trackableInfo.duration/60,trackableInfo.distance,
+        String str =String.format("Trackable Name: %s\nWalk Time: %d minute(s)\nDistance: %fkm\nMeet Time: %s",
+                trackableInfo.title,trackableInfo.duration/60,(double)trackableInfo.distance/1000,
                 trackableInfo.meetTime.toString()) ;
 
         Intent nextIntent = new Intent(context,ActionReceiver.class);

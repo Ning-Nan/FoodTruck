@@ -1,5 +1,6 @@
 package com.miles.foodtruck.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -29,12 +30,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private List<AbstractTrackable> mTrackables;
     private List<AbstractTracking> mTrackings;
     private Context mContext;
+    private Activity activity;
 
     public RecyclerAdapter(List<AbstractTrackable> trucks, List<AbstractTracking> trackings,
-                           Context context){
+                           Activity activity){
         mTrackables = trucks;
-        mContext = context;
+        mContext = activity.getApplicationContext();
         mTrackings = trackings;
+        this.activity = activity;
     }
 
 
@@ -99,7 +102,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(mTrackables.get(i),
                     null, mContext));
             viewHolder.view.setOnLongClickListener(new OnLongClickListener(Integer
-                    .toString(mTrackables.get(i).getId()),null));
+                    .toString(mTrackables.get(i).getId()),null,activity));
         }
         else
         {
@@ -108,7 +111,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(null,
                     mTrackings.get(i),mContext));
             viewHolder.view.setOnLongClickListener(new OnLongClickListener(
-                    "",mTrackings.get(i)));
+                    "",mTrackings.get(i),activity));
 
         }
 

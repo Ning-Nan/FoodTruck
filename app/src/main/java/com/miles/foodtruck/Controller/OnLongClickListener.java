@@ -1,5 +1,7 @@
 package com.miles.foodtruck.controller;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
@@ -8,6 +10,9 @@ import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.service.workers.RemoveFromDbThread;
 import com.miles.foodtruck.util.Helpers;
+import com.miles.foodtruck.view.MapsActivity;
+import com.miles.foodtruck.view.SettingsActivity;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +26,13 @@ public class OnLongClickListener implements View.OnLongClickListener{
     private static final String LOG_TAG = OnLongClickListener.class.getName();
     private String trackableId;
     private AbstractTracking tracking;
+    private Activity activity;
 
-    public OnLongClickListener(String trackableId, AbstractTracking tracking){
+    public OnLongClickListener(String trackableId, AbstractTracking tracking,Activity activity){
 
         this.trackableId = trackableId;
         this.tracking = tracking;
+        this.activity = activity;
 
     }
 
@@ -43,6 +50,9 @@ public class OnLongClickListener implements View.OnLongClickListener{
             for (int i = 0; i < matched.size(); i++) {
                 logTrackingInfo(matched.get(i),dateFormat);
             }
+
+            Intent intent = new Intent(activity, MapsActivity.class);
+            activity.startActivity(intent);
 
         }
         else

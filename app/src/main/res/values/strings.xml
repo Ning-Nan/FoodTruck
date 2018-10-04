@@ -3,6 +3,8 @@
     <string name="logo_description">Food truck name</string>
     <string name="show_tracking_menu_item">Show Trackings</string>
     <string name="suggest_now_menu_item">Suggest Now</string>
+    <string name="setting_menu_item">Settings</string>
+
 
     <string name="add_button">Add</string>
     <string name="edit_button">Edit</string>
@@ -16,4 +18,8 @@
     <string name="save_tracking_button">Save</string>
 
     <string name="location_label">Location: </string>
+
+    <string name="suggestion_setting_label">Suggestion Frequency(mins): </string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>
