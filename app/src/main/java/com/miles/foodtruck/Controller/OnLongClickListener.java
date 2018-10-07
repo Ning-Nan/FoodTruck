@@ -7,8 +7,10 @@ import android.view.View;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.model.Tracking;
 import com.miles.foodtruck.model.TrackingManager;
+import com.miles.foodtruck.service.ReminderService;
 import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.service.workers.RemoveFromDbThread;
+import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 import com.miles.foodtruck.view.MapsActivity;
 import com.miles.foodtruck.view.SettingsActivity;
@@ -41,17 +43,11 @@ public class OnLongClickListener implements View.OnLongClickListener{
 
         //Case called from Trackables. Log route information.
         if (tracking == null){
-            //For A1, using current date as searching date.
-            List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(
-                    trackableId,new Date(),
-                    v.getContext(),false);
-            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,
-                    DateFormat.MEDIUM);
-            for (int i = 0; i < matched.size(); i++) {
-                logTrackingInfo(matched.get(i),dateFormat);
-            }
+
+
 
             Intent intent = new Intent(activity, MapsActivity.class);
+            intent.putExtra(Constant.trackableId,trackableId);
             activity.startActivity(intent);
 
         }
@@ -59,6 +55,8 @@ public class OnLongClickListener implements View.OnLongClickListener{
         {   //Case called from Tracking List. Remove item.
             //Also remove from database, use another thread.
             TrackingManager.getSingletonInstance().remove((Tracking) tracking);
+            ReminderService reminderService = new ReminderService(activity.getApplicationContext());
+            reminderService.removeAll();
             RemoveFromDbThread thread = new RemoveFromDbThread(tracking,v.getContext());
             thread.start();
 

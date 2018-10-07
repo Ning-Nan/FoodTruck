@@ -44,19 +44,19 @@ public class SuggestionNotification {
 
         Intent addIntent = new Intent(context,ActionReceiver.class);
         addIntent.putExtra("Action","Add");
-        PendingIntent pendingAddIntent = PendingIntent.getBroadcast(context,3,addIntent,
+        PendingIntent pendingAddIntent = PendingIntent.getBroadcast(context,-1,addIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Intent nextIntent = new Intent(context,ActionReceiver.class);
         nextIntent.putExtra("Action","Next");
-        PendingIntent pendingNextIntent = PendingIntent.getBroadcast(context,1,nextIntent,
+        PendingIntent pendingNextIntent = PendingIntent.getBroadcast(context,-2,nextIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Intent dismissIntent = new Intent(context,ActionReceiver.class);
         dismissIntent.putExtra("Action","Dismiss");
-        PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(context,2,dismissIntent,
+        PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(context,-3,dismissIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
 
@@ -69,12 +69,11 @@ public class SuggestionNotification {
                 .addAction(R.drawable.ic_launcher_background,"Add",pendingAddIntent)
                 .addAction(R.drawable.ic_launcher_background,"Next",pendingNextIntent)
                 .addAction(R.drawable.ic_launcher_background,"Dismiss",pendingDismissIntent)
-
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-        notificationManager.notify(1,mBuilder.build());
+        notificationManager.notify(-4,mBuilder.build());
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.model.TrackacbleManager;
@@ -140,6 +141,7 @@ public class DbManager {
     //Save trackings when modified or added.
     public void saveOnAdded(AbstractTracking tracking){
 
+
         ContentValues values = new ContentValues();
         values.put("id",tracking.getTrackingId());
         values.put("trackableId",tracking.getTrackableId());
@@ -155,7 +157,7 @@ public class DbManager {
         //Update if exist.
         db.insertWithOnConflict(SimpleDBOpenHelper.TABLE_TRACKING,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         values.clear();
-        db.close();
+        //db.close();
     }
 
     //Save trackings when removed.
@@ -163,8 +165,12 @@ public class DbManager {
 
         db.delete(SimpleDBOpenHelper.TABLE_TRACKING,"id="+ "'" + tracking.getTrackingId()+
                 "'",null);
-        db.close();
+        //db.close();
 
+    }
+
+    public void close(){
+        db.close();
     }
 
 }

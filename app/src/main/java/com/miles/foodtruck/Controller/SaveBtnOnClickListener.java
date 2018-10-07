@@ -1,16 +1,22 @@
 package com.miles.foodtruck.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.model.Tracking;
 import com.miles.foodtruck.model.TrackingManager;
+import com.miles.foodtruck.service.ReminderService;
 import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.service.workers.SaveIntentService;
 import com.miles.foodtruck.service.workers.SaveToDbThread;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -37,6 +43,7 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
+
 
         //Check no filed is empty
         if (titleText.getText().toString().equals("") ||dateText.getText().toString().equals("")
@@ -72,6 +79,8 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
 
         TrackingManager trackingManager = TrackingManager.getSingletonInstance();
 
+
+
         //Edit case - Set same id
         if (bundle.getString(Constant.trackingId) !=null)
         {
@@ -87,10 +96,21 @@ public class SaveBtnOnClickListener implements View.OnClickListener {
 
         trackingManager.addToTracking(tracking);
 
-        //modify database in separate thread.
-        SaveToDbThread thread = new SaveToDbThread(tracking,activity);
-        thread.start();
 
+
+//        //modify database in separate thread.
+//        SaveToDbThread thread = new SaveToDbThread(tracking,activity);
+//        thread.start();
+
+        Intent intent = new Intent(activity, SaveIntentService.class);
+        intent.putExtra(Constant.trackingId,tracking.getTrackingId());
+        activity.startService(intent);
+
+        Helpers.callToast(Constant.SavedMessage,activity.getApplicationContext());
+
+
+
+        activity.finish();
 
 
     }

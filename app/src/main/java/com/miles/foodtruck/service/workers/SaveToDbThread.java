@@ -8,6 +8,7 @@ import com.miles.foodtruck.service.DbManager;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 
+//change to intend service
 public class SaveToDbThread extends Thread{
 
     private AbstractTracking tracking;
@@ -25,19 +26,6 @@ public class SaveToDbThread extends Thread{
     public void run() {
 
         DbManager.getSingletonInstance(activity.getApplicationContext()).saveOnAdded(tracking);
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                Helpers.callToast(Constant.SavedMessage,activity.getApplicationContext());
-
-                activity.finish();
-
-            }
-        };
-
-        activity.runOnUiThread(runnable);
 
     }
 }

@@ -21,7 +21,7 @@ import java.util.Observer;
 
 /*
     Reusable Recycler Adapter for both Tracking and Trackable List.
-    Depends on different parameter passed in, Make different decision.
+    Depends on different parameterS passed in, perform different operations.
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
@@ -72,6 +72,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void update(Observable o, Object arg) {
         updateTrackings((ArrayList<AbstractTracking>) arg);
         this.notifyDataSetChanged();
+//        UpdateLocationThread thread = new UpdateLocationThread((TrackingListActivity) activity);
+//        thread.start();
+
     }
 
 

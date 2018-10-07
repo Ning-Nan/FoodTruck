@@ -15,6 +15,8 @@ import com.miles.foodtruck.controller.PickerOnClickListener;
 import com.miles.foodtruck.controller.SaveBtnOnClickListener;
 import com.miles.foodtruck.controller.TimeSlotSpinner;
 import com.miles.foodtruck.R;
+import com.miles.foodtruck.model.TrackingManager;
+import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
@@ -47,6 +49,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         EditText timePicker = (EditText) findViewById(R.id.time_picker);
         EditText trackingTitle = (EditText) findViewById(R.id.input_tracking_name);
         Button saveBtn = (Button) findViewById(R.id.save_button);
+        TextView detail = (TextView) findViewById(R.id.detail);
 
         trackableTitle.setText(intent.getStringExtra(Constant.trackableName));
 
@@ -56,6 +59,12 @@ public class ModifyTrackingActivity extends AppCompatActivity {
             trackingTitle.setText(intent.getStringExtra(Constant.trackingTitle));
             datePicker.setText(intent.getStringExtra(Constant.dateText));
             timePicker.setText(intent.getStringExtra(Constant.timeText));
+            AbstractTracking tracking =
+                    TrackingManager.getSingletonInstance().get(intent.getStringExtra(Constant.trackingId));
+
+            detail.setText(String.format("Current Location: %s\nTravel Time: %d mins",
+                    tracking.getCurrLocation(),tracking.getTravelTime()/60)
+            );
 
         }
         datePicker.setOnClickListener

@@ -29,6 +29,7 @@ public class DbinitAsyncTask extends AsyncTask<Void, Integer, Void>{
         activity.initTrackable();
         activity.initRecyclerView();
         activity.initSpinner();
+        activity.initReminder();
 
     }
 

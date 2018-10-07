@@ -1,6 +1,8 @@
 package com.miles.foodtruck.model;
 
 
+import android.util.Log;
+
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -99,6 +101,7 @@ public class TrackingManager extends Observable{
 
         for (int i = 0; i <trackings.size() ; i++) {
 
+            Log.w("Test", trackings.get(i).getTrackingId());
             if (trackings.get(i).getTrackingId().equals(id))
             {
                 return trackings.get(i);

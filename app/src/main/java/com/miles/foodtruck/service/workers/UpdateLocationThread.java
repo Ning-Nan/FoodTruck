@@ -1,6 +1,7 @@
 package com.miles.foodtruck.service.workers;
 
 
+import com.miles.foodtruck.controller.SuggestionNotification;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.service.TrackingService;
@@ -24,6 +25,12 @@ public class UpdateLocationThread  extends Thread {
 
     @Override
     public void run(){
+
+        if (activity.updating == true)
+        {
+            return;
+        }
+        activity.updating = true;
 
         //Get all trackings in the memory
         final ArrayList<AbstractTracking> trackings =
@@ -60,10 +67,20 @@ public class UpdateLocationThread  extends Thread {
                                     + "," +
                                     Double.toString(trackingInfo.longitude));
 
-                            break;
+                        }
+
+                        if (trackingInfo.date.getTime() == tracking.getTargetStartTime().getTime())
+                        {
+                            SuggestionAsyncTask.TrackableInfo trackableInfo =
+                                    SuggestionAsyncTask.getTrackableInfo(trackingInfo);
+                            tracking.setTravelTime(trackableInfo.duration);
                         }
                     }
                 }
+
+
+
+
             }
         }
 
@@ -79,6 +96,7 @@ public class UpdateLocationThread  extends Thread {
 
         //Finished update tracking locations,Next do UI update.
         activity.runOnUiThread(runnable);
+        activity.updating = false;
 
 
     }

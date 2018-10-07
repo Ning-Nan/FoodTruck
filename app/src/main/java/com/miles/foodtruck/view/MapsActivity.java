@@ -10,10 +10,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.miles.foodtruck.R;
+import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.util.Constant;
+import com.miles.foodtruck.util.Helpers;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private List<TrackingService.TrackingInfo> matched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +31,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        String trackableId = getIntent().getStringExtra(Constant.trackableId);
+        //For A1, using current date as searching date.
+        List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(
+                trackableId,new Date(),
+                getApplicationContext(),false);
+
+        this.matched = matched;
+
+
     }
 
 
@@ -39,9 +57,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        if (matched.size() != 0 )
+        {
+            LatLng center = new LatLng(matched.get(0).latitude,matched.get(0).longitude);
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(center));
+
+
+        }
+
+        for (TrackingService.TrackingInfo trackingInfo: matched) {
+
+            LatLng latLng = new LatLng(trackingInfo.latitude,trackingInfo.longitude);
+
+            if (trackingInfo.stopTime == 0)
+            {
+                mMap.addMarker(new MarkerOptions().position(latLng).title("No Stop"));
+
+            }
+            else
+            {
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Stop Point"));
+
+            }
+        }
     }
 }

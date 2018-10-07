@@ -30,6 +30,9 @@
         <receiver android:name=".service.ActionReceiver">
         </receiver>
 
+        <service android:name=".service.workers.SaveIntentService"/>
+
+
         <activity android:name=".view.SettingsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

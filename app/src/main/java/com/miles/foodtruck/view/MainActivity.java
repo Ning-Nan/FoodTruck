@@ -25,7 +25,9 @@ import com.miles.foodtruck.controller.CategoriesSpinnerListener;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.model.TrackacbleManager;
 import com.miles.foodtruck.service.ActionReceiver;
+import com.miles.foodtruck.service.DbManager;
 import com.miles.foodtruck.service.LocationService;
+import com.miles.foodtruck.service.ReminderService;
 import com.miles.foodtruck.service.workers.*;
 import com.miles.foodtruck.R;
 
@@ -63,21 +65,24 @@ public class MainActivity extends AppCompatActivity {
         //Start the suggestion
 //        SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
 //        suggestionAsyncTask.execute();
-        //initAlarmService();
+        initAlarmService();
+
+
+        //REMINDER SHOULD BE AFTER LOAD TRACKINGS.
 
     }
 
-    private void initAlarmService()
+     public void initAlarmService()
     {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(getApplicationContext(), ActionReceiver.class);
         intent.putExtra("Action","Alarm");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                3,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         SharedPreferences settings = getSharedPreferences("setting", MODE_PRIVATE);
-        int millis = settings.getInt("SuggestionFrequency",60)  * 1000;
+        long millis = settings.getInt("SuggestionFrequency",60)  * 1000;
 
 
         am.setExact(AlarmManager.RTC_WAKEUP,
@@ -85,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void initReminder(){
+
+        Log.w("Reminder","Reminder get called");
+        ReminderService reminderService = new ReminderService(getApplicationContext());
+        reminderService.setAll();
+
+    }
+
 
     public void initRecyclerView(){
 
@@ -159,5 +173,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(actionReceiver);
+        DbManager.getSingletonInstance(getApplicationContext()).close();
     }
 }

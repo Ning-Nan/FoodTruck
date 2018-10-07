@@ -21,6 +21,7 @@ public class TrackingListActivity extends AppCompatActivity {
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TrackingManager trackingManager = TrackingManager.getSingletonInstance();
+    public static boolean updating = false;
 
 
     @Override

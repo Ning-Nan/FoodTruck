@@ -13,6 +13,7 @@ public abstract class AbstractTracking implements TrackingInterface{
     private Date meetTime;
     private String currLocation;
     private String meetLocation;
+    private int travelTime;
 
     public AbstractTracking(){
     }
@@ -81,12 +82,21 @@ public abstract class AbstractTracking implements TrackingInterface{
         this.meetLocation = meetLocation;
     }
 
+    public int getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(int travelTime) {
+        this.travelTime = travelTime;
+    }
+
     @Override
     public String getOutPutString() {
 
         return "Title: " + getTitle() + "\n"
                 + "Meet Time: " + getMeetTime() + "\n"
                 + "Meet Location: " + getMeetLocation() + "\n"
-                + "Current Location: " + getCurrLocation();
+                + "Current Location: " + getCurrLocation() + "\n"
+                + "Travel Time: " + getTravelTime()/60 + "mins";
     }
 }

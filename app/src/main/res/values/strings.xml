@@ -17,9 +17,15 @@
     <string name="time_slot_spinner_label">Select Time:</string>
     <string name="save_tracking_button">Save</string>
 
-    <string name="location_label">Location: </string>
+    <string name="location_label">Meet Location: </string>
+
+
 
     <string name="suggestion_setting_label">Suggestion Frequency(sec): </string>
+    <string name="remind_before_setting_label">Remind Before(sec): </string>
+    <string name="remind_again_setting_label">Remind Again(sec): </string>
+
+
     <string name="title_activity_maps">Map</string>
 
 </resources>

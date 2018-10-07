@@ -25,13 +25,10 @@ import java.util.List;
 
 public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
-    private final String LOG_TAG = SuggestionAsyncTask.class.getName();
+    private static final String LOG_TAG = SuggestionAsyncTask.class.getName();
     private Context context;
 
-    private String Key = "AIzaSyAoEf3AN9-pi33RQn_LYBkk1d9LbRDxydM";
 
-    private String APIUrl =
-            "https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&key=" + Key;
 
     private ArrayList<TrackableInfo> trackableInfos = new ArrayList<>();
 
@@ -64,6 +61,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
         if (trackables.size() != 0) {
 
+
             //For each trackable, update the current location and store into trackable info
             for (AbstractTrackable trackable : trackables) {
 
@@ -78,25 +76,31 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                 if (trackingInfos.size() != 0) {
 
 
+
                     for (TrackingService.TrackingInfo trackingInfo : trackingInfos) {
 
                         //use api to calculate distance + time.
                         TrackableInfo trackableInfo = getTrackableInfo(trackingInfo);
 
+
                         if (trackableInfo == null)
                         {
-
                             continue;
                         }
                         //If generated trackable info is in the tracking info time slot, or Can be
                         //reached even departure in the future
                         //Add to the list
+                        Log.w("asdadsad", String.valueOf(trackableInfo.meetTime.before(trackableInfo.targetStartTime)));
+                        Log.w("asdadsad", trackableInfo.meetTime.toString());
+                        Log.w("asdadsad", trackableInfo.targetStartTime.toString());
                         if((trackableInfo.meetTime.after(trackableInfo.targetStartTime) &&
                                 trackableInfo.meetTime.before(trackableInfo.targetEndTime))||
                                 trackableInfo.meetTime.getTime() == trackableInfo.targetStartTime.getTime()||
                                 trackableInfo.meetTime.getTime() == trackableInfo.targetEndTime.getTime()||
                                 trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                         {
+                            Log.w("asdadsad",trackableInfo.toString());
+
                             trackableInfo.title = trackable.getName();
                             if(trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                             {
@@ -135,6 +139,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
             }
         }
 
+
         for (TrackableInfo trackableInfo:trackableInfos) {
 
             Log.w("Test", trackableInfo.toString());
@@ -162,7 +167,14 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
     }
 
-    public TrackableInfo getTrackableInfo(TrackingService.TrackingInfo trackingInfo)  {
+    public static TrackableInfo getTrackableInfo(TrackingService.TrackingInfo trackingInfo)  {
+
+        Log.w("asd",trackingInfo.date.toString());
+
+        String Key = "AIzaSyAoEf3AN9-pi33RQn_LYBkk1d9LbRDxydM";
+
+        String APIUrl =
+                "https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&key=" + Key;
 
         StringBuilder htmlStringBuilder = new StringBuilder();
         HttpURLConnection connection = null;
@@ -191,6 +203,8 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
             if (statusCode != HttpURLConnection.HTTP_OK)
             {
+                Log.w("asdadsad","2");
+
                 Log.e(LOG_TAG, "Invalid Response Code: " + statusCode);
                 return null;
             }
@@ -253,14 +267,15 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
         @Override
         public String toString() {
 
-            String str = String.format("Trackable ID: %d \nDistance: %d \nDuration: %d\nMeet Time: %s",
+            String str = String.format("Trackable ID: %d \nDistance: %d \nTravel Time: %d\nMeet Time: %s",
                     trackableId,distance,duration,meetTime.toString());
 
             return str;
+
         }
     }
 
-    public TrackableInfo parseJSON(String str){
+    public static TrackableInfo parseJSON(String str){
 
         try {
             JSONObject info = new JSONObject(str);
