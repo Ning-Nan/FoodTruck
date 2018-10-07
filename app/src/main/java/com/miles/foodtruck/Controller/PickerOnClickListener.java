@@ -9,7 +9,6 @@ import com.miles.foodtruck.R;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.view.fragments.DateTimePickerFragment;
 
-
 /*
     Reusable Picker listener for date and time
  */

@@ -1,10 +1,10 @@
 package com.miles.foodtruck.service.workers;
 
 import android.os.AsyncTask;
-
 import com.miles.foodtruck.service.DbManager;
 import com.miles.foodtruck.view.MainActivity;
 
+//Load on app start.
 public class DbinitAsyncTask extends AsyncTask<Void, Integer, Void>{
 
     private MainActivity activity;
@@ -17,6 +17,7 @@ public class DbinitAsyncTask extends AsyncTask<Void, Integer, Void>{
     @Override
     protected Void doInBackground(Void... voids) {
 
+        //First call on DB Manager, will load from database.
         DbManager.getSingletonInstance(activity.getApplicationContext());
 
         return null;

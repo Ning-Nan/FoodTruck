@@ -30,6 +30,7 @@ import com.miles.foodtruck.service.LocationService;
 import com.miles.foodtruck.service.ReminderService;
 import com.miles.foodtruck.service.workers.*;
 import com.miles.foodtruck.R;
+import com.miles.foodtruck.util.Constant;
 
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle(R.string.trackable_list_title);
 
+        //init broadcast receiver for network monitoring
         initReceiver();
 
         //Async task to perform database init and load models.
@@ -63,43 +65,41 @@ public class MainActivity extends AppCompatActivity {
         locationService.initLocation(getApplicationContext());
 
         //Start the suggestion
-//        SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(this);
-//        suggestionAsyncTask.execute();
         initAlarmService();
-
-
-        //REMINDER SHOULD BE AFTER LOAD TRACKINGS.
 
     }
 
      public void initAlarmService()
     {
+        //Init the suggestion
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
         Intent intent = new Intent(getApplicationContext(), ActionReceiver.class);
-        intent.putExtra("Action","Alarm");
+        intent.putExtra(Constant.Action,Constant.AlarmAction);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                Constant.SuggestionRequestCode,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
-        SharedPreferences settings = getSharedPreferences("setting", MODE_PRIVATE);
-        long millis = settings.getInt("SuggestionFrequency",60)  * 1000;
+        //get settings
+        SharedPreferences settings = getSharedPreferences(Constant.SettingName, MODE_PRIVATE);
+        long millis = settings.getInt(Constant.SuggestionFrequency,60)  * 1000;
 
 
+        //set alarm.
+        //Repeat alarm has delay. So set again when the suggestion showed.
         am.setExact(AlarmManager.RTC_WAKEUP,
                 System.currentTimeMillis() + millis ,pendingIntent);
 
 
     }
 
+    //init reminder after the tracking loaded.
     public void initReminder(){
 
-        Log.w("Reminder","Reminder get called");
         ReminderService reminderService = new ReminderService(getApplicationContext());
         reminderService.setAll();
-
     }
 
 
+    //Init recyler View after the db load
     public void initRecyclerView(){
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new CategoriesSpinnerListener(foodTrucks,mAdapter));
     }
 
+    //init receiver for internet monitoring
     private void initReceiver(){
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -154,10 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Request permission result.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        //If accept, then init the location service.
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0
@@ -172,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //unregister receiver and close database
         unregisterReceiver(actionReceiver);
         DbManager.getSingletonInstance(getApplicationContext()).close();
     }

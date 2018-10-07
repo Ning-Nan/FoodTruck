@@ -1,8 +1,5 @@
 package com.miles.foodtruck.model;
 
-
-import android.util.Log;
-
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +30,7 @@ public class TrackingManager extends Observable{
         Iterator<AbstractTracking> iter = trackings.iterator();
 
         //Check same id
+        //Replace if same id
         while (iter.hasNext()) {
            AbstractTracking tempTracking = iter.next();
             if (tempTracking.getTrackingId().equals(tracking.getTrackingId()))
@@ -65,6 +63,7 @@ public class TrackingManager extends Observable{
     }
 
     //No worries about ID check
+    //When read from database. the id is already checked
     public void addWithNoConflic(AbstractTracking tracking){
 
         //Sort by date
@@ -100,15 +99,12 @@ public class TrackingManager extends Observable{
     public AbstractTracking get(String id){
 
         for (int i = 0; i <trackings.size() ; i++) {
-
-            Log.w("Test", trackings.get(i).getTrackingId());
             if (trackings.get(i).getTrackingId().equals(id))
             {
                 return trackings.get(i);
             }
 
         }
-
         return null;
 
     }

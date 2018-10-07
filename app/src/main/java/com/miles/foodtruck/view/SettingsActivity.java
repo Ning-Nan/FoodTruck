@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.controller.SettingsSaveController;
+import com.miles.foodtruck.util.Constant;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void init(){
 
-        SharedPreferences settings = getSharedPreferences("setting",MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(Constant.SettingName,MODE_PRIVATE);
 
         EditText suggestionFrequency = (EditText) findViewById(R.id.suggestion_setting);
         EditText remindBefore = (EditText) findViewById(R.id.remind_before_setting);

@@ -1,22 +1,22 @@
 package com.miles.foodtruck.service.workers;
 
 
-import com.miles.foodtruck.controller.SuggestionNotification;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.service.TrackingService;
 import com.miles.foodtruck.util.Helpers;
 import com.miles.foodtruck.view.TrackingListActivity;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//When enter the tracking List
+//Update all the travel time to the meet location.
+//And Update the status of the tracking, is it stopping at some point or driving.
 public class UpdateLocationThread  extends Thread {
 
     private TrackingListActivity activity;
     private static final String DEFAULT_LOCATION = "Driving";
-
 
     public UpdateLocationThread(TrackingListActivity activity){
 
@@ -26,11 +26,6 @@ public class UpdateLocationThread  extends Thread {
     @Override
     public void run(){
 
-        if (activity.updating == true)
-        {
-            return;
-        }
-        activity.updating = true;
 
         //Get all trackings in the memory
         final ArrayList<AbstractTracking> trackings =
@@ -52,7 +47,6 @@ public class UpdateLocationThread  extends Thread {
                 //If current time fit in the time range, then set the current location.
                 if (trackingInfos.size()!=0)
                 {
-
                     for (TrackingService.TrackingInfo trackingInfo: trackingInfos) {
                         Date start = trackingInfo.date;
                         Date end = Helpers.caculateEndTime(start,trackingInfo.stopTime);
@@ -69,6 +63,8 @@ public class UpdateLocationThread  extends Thread {
 
                         }
 
+                        //Calculate the travel time to the meet location
+                        //If this tracking info matches the tracking saved.
                         if (trackingInfo.date.getTime() == tracking.getTargetStartTime().getTime())
                         {
                             SuggestionAsyncTask.TrackableInfo trackableInfo =
@@ -96,8 +92,6 @@ public class UpdateLocationThread  extends Thread {
 
         //Finished update tracking locations,Next do UI update.
         activity.runOnUiThread(runnable);
-        activity.updating = false;
-
 
     }
 

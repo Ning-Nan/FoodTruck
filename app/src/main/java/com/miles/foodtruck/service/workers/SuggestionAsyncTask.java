@@ -2,7 +2,6 @@ package com.miles.foodtruck.service.workers;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.miles.foodtruck.controller.SuggestionNotification;
@@ -10,6 +9,7 @@ import com.miles.foodtruck.model.TrackacbleManager;
 import com.miles.foodtruck.model.abstracts.AbstractTrackable;
 import com.miles.foodtruck.service.LocationService;
 import com.miles.foodtruck.service.TrackingService;
+import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 
 import org.json.JSONException;
@@ -23,15 +23,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//Called when suggestion needed.
+//Generate the suggestion list.
+//Then send to notification.
 public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
     private static final String LOG_TAG = SuggestionAsyncTask.class.getName();
     private Context context;
-
-
-
     private ArrayList<TrackableInfo> trackableInfos = new ArrayList<>();
-
 
 
     public SuggestionAsyncTask(Context context){
@@ -40,15 +39,13 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
     }
 
-
-
-
+    //Work in another thread
     @Override
     protected Void doInBackground(Void... voids) {
 
+        //Case not got the current location. Cancel.
         if (LocationService.getCurrLocation()== null)
         {
-
             this.cancel(true);
         }
 
@@ -61,8 +58,8 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
         if (trackables.size() != 0) {
 
-
-            //For each trackable, update the current location and store into trackable info
+            //For each trackable, get the distance to meet location and walk time
+            //And store into trackable info
             for (AbstractTrackable trackable : trackables) {
 
                 //Get available tracking info from tracking service
@@ -74,8 +71,6 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
                 //for each tracking info, determine whether it can be arrived before it leaves.
                 if (trackingInfos.size() != 0) {
-
-
 
                     for (TrackingService.TrackingInfo trackingInfo : trackingInfos) {
 
@@ -90,17 +85,12 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                         //If generated trackable info is in the tracking info time slot, or Can be
                         //reached even departure in the future
                         //Add to the list
-                        Log.w("asdadsad", String.valueOf(trackableInfo.meetTime.before(trackableInfo.targetStartTime)));
-                        Log.w("asdadsad", trackableInfo.meetTime.toString());
-                        Log.w("asdadsad", trackableInfo.targetStartTime.toString());
                         if((trackableInfo.meetTime.after(trackableInfo.targetStartTime) &&
                                 trackableInfo.meetTime.before(trackableInfo.targetEndTime))||
                                 trackableInfo.meetTime.getTime() == trackableInfo.targetStartTime.getTime()||
                                 trackableInfo.meetTime.getTime() == trackableInfo.targetEndTime.getTime()||
                                 trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                         {
-                            Log.w("asdadsad",trackableInfo.toString());
-
                             trackableInfo.title = trackable.getName();
                             if(trackableInfo.meetTime.before(trackableInfo.targetStartTime))
                             {
@@ -138,25 +128,16 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                 }
             }
         }
-
-
-        for (TrackableInfo trackableInfo:trackableInfos) {
-
-            Log.w("Test", trackableInfo.toString());
-            
-        }
-
-
-
         return null;
     }
+
 
     @Override
     protected void onPostExecute(Void aVoid) {
 
+        //Show notification
         if (trackableInfos.size()!=0)
         {
-
             SuggestionNotification suggestionNotification =
                     new SuggestionNotification(context, trackableInfos);
 
@@ -167,17 +148,17 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
     }
 
+
+
     public static TrackableInfo getTrackableInfo(TrackingService.TrackingInfo trackingInfo)  {
 
-        Log.w("asd",trackingInfo.date.toString());
-
-        String Key = "AIzaSyAoEf3AN9-pi33RQn_LYBkk1d9LbRDxydM";
-
-        String APIUrl =
-                "https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&key=" + Key;
+        //API URL
+        String APIUrl = Constant.DistanceUrl + Constant.DistanceKey;
 
         StringBuilder htmlStringBuilder = new StringBuilder();
         HttpURLConnection connection = null;
+
+        //Get Destination and current location
         String startEnd = String.format("&origins=%f,%f&destinations=%f,%f",
                 LocationService.getCurrLocation().getLatitude(),
                 LocationService.getCurrLocation().getLongitude(),
@@ -203,8 +184,6 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
             if (statusCode != HttpURLConnection.HTTP_OK)
             {
-                Log.w("asdadsad","2");
-
                 Log.e(LOG_TAG, "Invalid Response Code: " + statusCode);
                 return null;
             }
@@ -228,6 +207,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
                 htmlStringBuilder.append(line);
             }
 
+            //Parse JSON responds and build trackable info
             TrackableInfo trackableInfo = parseJSON(htmlStringBuilder.toString());
             trackableInfo.meetLocation = Double.toString(trackingInfo.latitude)+","+
                     Double.toString(trackingInfo.longitude);
@@ -238,22 +218,20 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
 
             return trackableInfo;
 
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
+            //close connection
             if (connection!=null)
             {
                 connection.disconnect();
             }
         }
 
-
         return null;
     }
 
+    //Data Access Object Only
     public static class TrackableInfo {
         public int trackableId;
         public int distance;
@@ -267,7 +245,8 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
         @Override
         public String toString() {
 
-            String str = String.format("Trackable ID: %d \nDistance: %d \nTravel Time: %d\nMeet Time: %s",
+            String str =
+                    String.format("Trackable ID: %d \nDistance: %d \nTravel Time: %d\nMeet Time: %s",
                     trackableId,distance,duration,meetTime.toString());
 
             return str;
@@ -275,6 +254,7 @@ public class SuggestionAsyncTask extends AsyncTask<Void,Integer,Void>{
         }
     }
 
+    //Parse JSON to trackable info object
     public static TrackableInfo parseJSON(String str){
 
         try {

@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
 import com.miles.foodtruck.R;
 import com.miles.foodtruck.controller.SuggestionNotification;
@@ -18,39 +17,45 @@ import com.miles.foodtruck.model.Tracking;
 import com.miles.foodtruck.model.TrackingManager;
 import com.miles.foodtruck.model.abstracts.AbstractTracking;
 import com.miles.foodtruck.service.workers.SaveIntentService;
-import com.miles.foodtruck.service.workers.SaveToDbThread;
 import com.miles.foodtruck.service.workers.SuggestionAsyncTask;
 import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
-
 import java.util.Date;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class ActionReceiver extends BroadcastReceiver
 {
+    //Network status to prevent jump out suggestion when entering app with internet on.
     public static int networkStatus = -1;
+    //Currently operating suggestion in Notification area.
     public static SuggestionAsyncTask.TrackableInfo trackableInfo;
-
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        //Only the internet monitoring action is set.
+        //No action set for other intent send to BroadcastReceiver.
         if (intent.getAction() != null)
         {
+            //Double check the action.
             if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction()))
             {
+                //Get network status
                 ConnectivityManager manager =
                         (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
+                //has internet
                 if (networkInfo != null)
                 {
+                    //-1 means just enter the app.
                     if (networkStatus  == -1)
                     {
                         networkStatus = 1;
                     }
+                    //That means lost internet then have again.
+                    //Do suggestion.
                     else
                     {
                         networkStatus = 1;
@@ -59,6 +64,7 @@ public class ActionReceiver extends BroadcastReceiver
                     }
 
                 }
+                //Lost internet.
                 else
                 {
                     networkStatus = 0;
@@ -66,34 +72,39 @@ public class ActionReceiver extends BroadcastReceiver
                 }
             }
         }
+        //Not internet change action.
+        //Actions for notifications...etc
         else{
-
-            String action=intent.getStringExtra("Action");
+            String action=intent.getStringExtra(Constant.Action);
 
             switch (action){
-                case "Next":
+                //Suggestion next
+                case Constant.NextAction:
                     nextNotification();
                     break;
 
-                case"Dismiss":
+                //Notification close
+                case Constant.DismissAction:
                     dismissNotification(context,intent);
                     break;
-                case"Add":
+                //Suggestion add tracking
+                case Constant.AddAction:
                     addTracking(context);
                     break;
-
-                case "Alarm":
+                //Make Notification for Suggestion.
+                case Constant.AlarmAction:
                     setAlarm(context);
                     break;
-
-                case "Reminder":
+                //Remind notification
+                case Constant.ReminderAction:
                     showReminder(context, intent);
                     break;
-
-                case "Cancel":
+                //Remind notification cancel all following reminders.
+                case Constant.CancelAction:
                     cancelReminder(context, intent);
                     break;
-                case "Again":
+                //Remind me again in XX seconds.
+                case Constant.AgainAction:
                     againReminder(context, intent);
                     break;
             }
@@ -105,50 +116,50 @@ public class ActionReceiver extends BroadcastReceiver
 
     }
 
+    //When user click remind me in XX seconds in the notification
     private void againReminder(Context context, Intent intent){
 
-        SharedPreferences settings = context.getSharedPreferences("setting", MODE_PRIVATE);
-        long millis = settings.getInt("RemindBefore",60)  * 1000;
-        long remindAgain = settings.getInt("RemindAgain",60)  * 1000;
+        SharedPreferences settings = context.getSharedPreferences(Constant.SettingName, MODE_PRIVATE);
 
+        //Value from user setting
+        long remindAgain = settings.getInt(Constant.RemindAgain,60)  * 1000;
 
+        //Get the tracking
         String trackingId = intent.getStringExtra(Constant.trackingId);
-
         AbstractTracking tracking = TrackingManager.getSingletonInstance().get(trackingId);
 
         Date now = new Date();
-
         long time = now.getTime() + remindAgain;
 
-        if (time > tracking.getMeetTime().getTime())
-        {
-            return;
-        }
+        //Set the alarm again based on the given time
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent1 = new Intent(context, ActionReceiver.class);
-        intent1.putExtra("Action","Reminder");
+        intent1.putExtra(Constant.Action,Constant.ReminderAction);
         intent1.putExtra(Constant.trackingId,tracking.getTrackingId());
-//        intent1.putExtra("ReminderTime",time);
+
+        //use the same id so the notification will not be mess.
+        //refs are kept in the ReminderService class
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                (Integer) ReminderService.ids.get(tracking.getTrackingId()),intent1,PendingIntent.FLAG_CANCEL_CURRENT);
+                (Integer) ReminderService.ids.get(tracking.getTrackingId()),intent1,
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
-        now.setTime(time);
-
-        Log.w("Reset alram", now.toString());
+        //set alarm
         am.setExact(AlarmManager.RTC_WAKEUP,
                 time ,pendingIntent);
-
-
+        //Hide current notification after clicked.
         NotificationManagerCompat.from(context).cancel(
                 (Integer) ReminderService.ids.get(tracking.getTrackingId()));
 
     }
 
+    //Cancel all the reminders in the future(That is how I understand from the assignment)
     private void cancelReminder(Context context, Intent intent){
 
+        //get id ref. Close this notification
         int id = (int) ReminderService.ids.get(intent.getStringExtra(Constant.trackingId));
         NotificationManagerCompat.from(context).cancel(id);
 
+        //remove all alarm
         ReminderService reminderService = new ReminderService(context);
         reminderService.removeAll();
 
@@ -156,58 +167,70 @@ public class ActionReceiver extends BroadcastReceiver
 
     }
 
+    //Show next suggestion
     private void nextNotification(){
         if (SuggestionNotification.trackableInfos.size() <= SuggestionNotification.index + 1)
         {
-            //case end.
+            //case end of the Suggestion
 
         }
         else
         {
+            //Show next suggestion
             SuggestionNotification.index += 1;
             SuggestionNotification.show();
         }
     }
 
+    //Close the notification
     private void dismissNotification(Context context,Intent intent){
 
+        //Case Close the suggestion Notification.
         if (intent.getStringExtra(Constant.trackingId) == null)
         {
-            int notificationId = -4;
+            int notificationId = Constant.SuggestionNotificationCode;
             NotificationManagerCompat.from(context).cancel(notificationId);
         }
 
         else{
 
+            //Case Reminder for tracking
             int id = (int) ReminderService.ids.get(intent.getStringExtra(Constant.trackingId));
             NotificationManagerCompat.from(context).cancel(id);
-
-
 
         }
 
     }
 
+    //Make the suggestion Notification
+    //And set for next suggestion time
     private void setAlarm(Context context){
+        //Get suggestions and show
         SuggestionAsyncTask suggestionAsyncTask = new SuggestionAsyncTask(context);
         suggestionAsyncTask.execute();
+
+        //Set for next suggestion time.
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
         Intent intent1 = new Intent(context, ActionReceiver.class);
-        intent1.putExtra("Action","Alarm");
+        intent1.putExtra(Constant.Action,Constant.AlarmAction);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                3,intent1,PendingIntent.FLAG_UPDATE_CURRENT);
+                Constant.SuggestionRequestCode,intent1,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        SharedPreferences settings = context.getSharedPreferences("setting", MODE_PRIVATE);
-        int millis = settings.getInt("SuggestionFrequency",60)  * 1000;
+        //Get setting
+        SharedPreferences settings = context.getSharedPreferences(
+                Constant.SettingName, MODE_PRIVATE);
+        int millis = settings.getInt(Constant.SuggestionFrequency,60)  * 1000;
 
-
+        //set alarm
         am.setExact(AlarmManager.RTC_WAKEUP,
                 System.currentTimeMillis() + millis ,pendingIntent);
     }
 
+    //Add showing tracking
     private void addTracking(Context context)
     {
+        //get tracking from static value.
+        //Set from Show next.
         AbstractTracking tracking = new Tracking();
         tracking.setTitle(trackableInfo.title);
         tracking.setMeetTime(trackableInfo.meetTime);
@@ -215,91 +238,90 @@ public class ActionReceiver extends BroadcastReceiver
         tracking.setTargetStartTime(trackableInfo.targetStartTime);
         tracking.setTargetEndTime(trackableInfo.targetEndTime);
         tracking.setTrackableId(trackableInfo.trackableId);
-
-        //SET DEFAULT VALUE HERE.
         tracking.setTravelTime(trackableInfo.duration);
 
+        //get manager
         TrackingManager trackingManager = TrackingManager.getSingletonInstance();
 
-
+        //Set random tracking id (Repeat checked.)
         tracking.setTrackingId(Helpers.random(5,trackingManager));
 
+        //Add to memory
         trackingManager.addToTracking(tracking);
 
+        //Reset the reminders.
         ReminderService reminderService = new ReminderService(context);
         reminderService.setAll();
 
+        //Save to database
         Intent intent = new Intent(context, SaveIntentService.class);
-
         intent.putExtra(Constant.trackingId,tracking.getTrackingId());
-
         context.startService(intent);
 
-        int notificationId = -4;
+        int notificationId = Constant.SuggestionNotificationCode;
         NotificationManagerCompat.from(context).cancel(notificationId);
-
         Helpers.callToast(Constant.SavedMessage,context);
 
-//        //modify database in separate thread.
-//        SaveToDbThread thread = new SaveToDbThread(tracking,context);
-//        thread.start();
     }
 
+    //Show the upcoming tracking reminder
     private void showReminder(Context context, Intent intent){
 
         String trackingId = intent.getStringExtra(Constant.trackingId);
         int id = (int) ReminderService.ids.get(trackingId);
 
-        Log.w("Remainder","trackingId:" + trackingId);
-        Log.w("Remainder", "id: " + Integer.toString(id));
-
-
+        //get this tracking information
         AbstractTracking tracking =
                 TrackingManager.getSingletonInstance().get(trackingId);
 
-
+        //Display string
         String str =String.format("Coming Tracking!\nTracking Name: %s\nMeet Time: %s\nMeet Location: %s",
                 tracking.getTitle(),tracking.getMeetTime().toString(),tracking.getMeetLocation()) ;
 
+        //set button actions
         Intent dismissIntent = new Intent(context,ActionReceiver.class);
-        dismissIntent.putExtra("Action","Dismiss");
+        dismissIntent.putExtra(Constant.Action,Constant.DismissAction);
         dismissIntent.putExtra(Constant.trackingId,trackingId);
-        PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(context,-3,dismissIntent,
+        PendingIntent pendingDismissIntent = PendingIntent.getBroadcast(
+                context,Constant.DismissActionRequestCode,dismissIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent cancelIntent = new Intent(context,ActionReceiver.class);
-        cancelIntent.putExtra("Action","Cancel");
+        cancelIntent.putExtra(Constant.Action,Constant.CancelAction);
         cancelIntent.putExtra(Constant.trackingId,trackingId);
-        PendingIntent pendingCancelIntent = PendingIntent.getBroadcast(context,-5,cancelIntent,
+        PendingIntent pendingCancelIntent = PendingIntent.getBroadcast(
+                context,Constant.CancelRequestCode,cancelIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent againIntent = new Intent(context,ActionReceiver.class);
-        againIntent.putExtra("Action","Again");
+        againIntent.putExtra(Constant.Action,Constant.AgainAction);
         againIntent.putExtra(Constant.trackingId,trackingId);
-
-        PendingIntent pendingAgainIntent = PendingIntent.getBroadcast(context,-6,againIntent,
+        PendingIntent pendingAgainIntent = PendingIntent.getBroadcast(
+                context,Constant.AgainRequestCode,againIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        SharedPreferences settings = context.getSharedPreferences("setting",MODE_PRIVATE);
+        //get settings and button name
+        SharedPreferences settings = context.getSharedPreferences(Constant.SettingName,MODE_PRIVATE);
         String againTitle = String.format("Remind in %ssecs",
-                Integer.toString(settings.getInt("RemindAgain",60)));
+                Integer.toString(settings.getInt(Constant.RemindAgain,60)));
 
 
+        //Build the notification
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Tracking Reminder")
+                .setContentTitle(Constant.TrackingReminder)
                 .setContentText(tracking.getTitle())
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(str))
-                .addAction(R.drawable.ic_launcher_background,"Dismiss",pendingDismissIntent)
-                .addAction(R.drawable.ic_launcher_background,"Cancel",pendingCancelIntent)
+                .addAction(R.drawable.ic_launcher_background,Constant.DismissAction,pendingDismissIntent)
+                .addAction(R.drawable.ic_launcher_background,Constant.CancelAction,pendingCancelIntent)
                 .addAction(R.drawable.ic_launcher_background,againTitle,pendingAgainIntent)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
+        //show the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
         notificationManager.notify(id,mBuilder.build());
 
 

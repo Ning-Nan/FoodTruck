@@ -1,6 +1,5 @@
 package com.miles.foodtruck.controller;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -11,7 +10,7 @@ import com.miles.foodtruck.view.SettingsActivity;
 import com.miles.foodtruck.view.TrackingListActivity;
 
 /*
-    Menu action for all activities.
+    Menu action.
  */
 public class OnMenuItemSelect {
 
@@ -28,12 +27,10 @@ public class OnMenuItemSelect {
                 activity.finish();
                 return true;
 
-
             case R.id.suggest_now:
                 SuggestionAsyncTask suggestionAsyncTask =
                         new SuggestionAsyncTask(activity.getApplicationContext());
                 suggestionAsyncTask.execute();
-
                 return true;
 
             case R.id.settings:

@@ -32,8 +32,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //get this trackable id
         String trackableId = getIntent().getStringExtra(Constant.trackableId);
-        //For A1, using current date as searching date.
+
+        //get matched tracking infos.
         List<TrackingService.TrackingInfo> matched = Helpers.getTrackingInfoForTrackable(
                 trackableId,new Date(),
                 getApplicationContext(),false);
@@ -58,15 +60,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
+        //Make the first point as center and correct zoom level
         if (matched.size() != 0 )
         {
             LatLng center = new LatLng(matched.get(0).latitude,matched.get(0).longitude);
             mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(center));
 
-
         }
 
+        //for each tracking info from tracking service.
+        //Add marker for them
         for (TrackingService.TrackingInfo trackingInfo: matched) {
 
             LatLng latLng = new LatLng(trackingInfo.latitude,trackingInfo.longitude);

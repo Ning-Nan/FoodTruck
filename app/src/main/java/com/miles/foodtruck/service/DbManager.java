@@ -20,7 +20,7 @@ import java.util.Date;
 
 
 //Note: This class Manage all the operations related with the database.
-//Will be called by the asyncTask.
+//Will be called by the workers thread.
 public class DbManager {
 
     private static DbManager singletonInstance;
@@ -157,7 +157,6 @@ public class DbManager {
         //Update if exist.
         db.insertWithOnConflict(SimpleDBOpenHelper.TABLE_TRACKING,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         values.clear();
-        //db.close();
     }
 
     //Save trackings when removed.
@@ -165,10 +164,10 @@ public class DbManager {
 
         db.delete(SimpleDBOpenHelper.TABLE_TRACKING,"id="+ "'" + tracking.getTrackingId()+
                 "'",null);
-        //db.close();
 
     }
 
+    //Close when activity finish.
     public void close(){
         db.close();
     }

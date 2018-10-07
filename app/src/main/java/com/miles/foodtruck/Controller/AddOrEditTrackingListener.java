@@ -45,14 +45,18 @@ public class AddOrEditTrackingListener implements View.OnClickListener {
                     TrackacbleManager.getTrackable(tracking.getTrackableId()).getName());
             intent.putExtra(Constant.trackingTitle, tracking.getTitle());
             intent.putExtra(Constant.trackingId, tracking.getTrackingId());
+
+            //Put formatted date.
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             intent.putExtra(Constant.dateText,dateFormat.format(tracking.getMeetTime()));
+
+            //Put formatted Time.
             dateFormat = new SimpleDateFormat("h:mm:ss aa");
             intent.putExtra(Constant.timeText,dateFormat.format(tracking.getMeetTime()));
 
         }
 
-        //case add new
+        //If did not pass the tracking in, means to create new tracking.
         else
         {
             intent.putExtra(Constant.operation, Constant.AddOperation);

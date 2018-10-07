@@ -46,6 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
+        //Set layout for per list item.
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item,
                 parent,false);
         return new ViewHolder(item);
@@ -70,10 +71,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     @Override
     public void update(Observable o, Object arg) {
+
         updateTrackings((ArrayList<AbstractTracking>) arg);
         this.notifyDataSetChanged();
-//        UpdateLocationThread thread = new UpdateLocationThread((TrackingListActivity) activity);
-//        thread.start();
 
     }
 
@@ -86,6 +86,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
+            //In the list, there is one button and one test for per item.
             mTextView = (TextView) itemView.findViewById(R.id.list_text);
             mButton = (Button) itemView.findViewById(R.id.list_button);
             this.view = itemView;
@@ -99,14 +100,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
+        //Trackings not passed in. So this adapter is operating trackable list.
         if (mTrackings == null) {
             viewHolder.mTextView.setText(mTrackables.get(i).getOutPutString());
             viewHolder.mButton.setText(R.string.add_button);
+
+            //pass trackables not trackings. So the listener know what list they are operating.
             viewHolder.mButton.setOnClickListener(new AddOrEditTrackingListener(mTrackables.get(i),
                     null, mContext));
             viewHolder.view.setOnLongClickListener(new OnLongClickListener(Integer
                     .toString(mTrackables.get(i).getId()),null,activity));
         }
+        //Operating tracking list
         else
         {
             viewHolder.mTextView.setText(mTrackings.get(i).getOutPutString());
@@ -115,15 +120,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     mTrackings.get(i),mContext));
             viewHolder.view.setOnLongClickListener(new OnLongClickListener(
                     "",mTrackings.get(i),activity));
-
         }
 
     }
 
     /*
     Help to update the list.
-    Trackables are updated from spinner, so it is public method.
-    Trackings are updated using Observer, and then call this method in this class.
+    Then update the adapter and UI.
      */
     public void updateTrackables(ArrayList<AbstractTrackable> foodTrucks){
         this.mTrackables = foodTrucks;

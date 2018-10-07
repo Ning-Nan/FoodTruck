@@ -9,6 +9,7 @@ import com.miles.foodtruck.util.Constant;
 import com.miles.foodtruck.util.Helpers;
 
 
+//Called when remove tracking from tracking list
 public class RemoveFromDbThread extends Thread {
 
     private AbstractTracking tracking;
@@ -24,8 +25,10 @@ public class RemoveFromDbThread extends Thread {
     @Override
     public void run() {
 
+        //Remove from DbManger.
         DbManager.getSingletonInstance(context).saveOnRemoved(tracking);
 
+        //runnable for UI update
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -35,6 +38,7 @@ public class RemoveFromDbThread extends Thread {
             }
         };
 
+        //Run in Main thread.
         ((Activity)context).runOnUiThread(runnable);
 
     }

@@ -81,6 +81,7 @@ class SimpleDBOpenHelper extends SQLiteOpenHelper
 
     }
 
+    //Update when database upgrade
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

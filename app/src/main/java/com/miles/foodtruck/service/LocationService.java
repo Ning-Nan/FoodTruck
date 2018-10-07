@@ -9,15 +9,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
+//Get current location
 public class LocationService implements LocationListener {
 
     private LocationManager locationManager;
     private static final int LOCATION_PERMISSION_REQUEST = 1;
     private AppCompatActivity activity;
     private static Location currLocation = null;
-
 
     public LocationService(AppCompatActivity activity) {
 
@@ -26,9 +25,10 @@ public class LocationService implements LocationListener {
 
     public void initLocation(Context context) {
 
-
+        //Get the location service and start to request.
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
+        //Permission check.
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -69,7 +69,7 @@ public class LocationService implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
-        Log.w("location:", location.toString());
+        //Update current location.
         currLocation = location;
     }
 
