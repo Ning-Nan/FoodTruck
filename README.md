@@ -2,7 +2,8 @@
 One application that use Android knowledge. REST API/Service/Notification/Broadcast etc..
 
 Use And Functions:
-    1. Replace the txt file in raw folder/Change the date time to current date based values.
+
+    1. Replace the txt file in raw folder/Change the date time to current date based values
     2. Open the Application, the database will be updated.
     3. The application will suggest food trucks using notifications with distance, walking time every 30 sec, you can change it in settings.
     4. You can use the function suggest now or just switch your network status to immediately get one suggestion.
